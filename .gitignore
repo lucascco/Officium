@@ -10,3 +10,9 @@
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+/OfficiumProject/nbproject/private/
+/OfficiumProject/build/
+/OfficiumProject/dist/
+OfficiumProject/nbproject/project.xml
+OfficiumProject/nbproject/project.properties
+OfficiumProject/build.xml
