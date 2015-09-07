@@ -25,7 +25,7 @@ public class IndexBean implements Serializable{
     
     @PostConstruct
     public void ini(){
-        Persistence.createEntityManagerFactory("OfficiumProjectPU");
+        statusTarefa = new StatusTarefa();
     }
 
     public StatusTarefa getStatusTarefa() {
