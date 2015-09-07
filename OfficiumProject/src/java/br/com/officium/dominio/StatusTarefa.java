@@ -5,6 +5,7 @@
  */
 package br.com.officium.dominio;
 
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javassist.SerialVersionUID;
@@ -21,19 +22,17 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "status_tarefas", schema = PojoBase.DB)
-public class StatusTarefa implements PojoBase{
-    
+public class StatusTarefa implements PojoBase {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    
+
     @Column(unique = true, length = 50)
     private String descricao;
-    
-    
-    
+
     @Override
     public void setId(Long id) {
         this.id = id;
@@ -54,6 +53,29 @@ public class StatusTarefa implements PojoBase{
         return null;
     }
 
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final StatusTarefa other = (StatusTarefa) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
+        return true;
+    }
+
     public String getDescricao() {
         return descricao;
     }
@@ -61,5 +83,5 @@ public class StatusTarefa implements PojoBase{
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
-    
+
 }
