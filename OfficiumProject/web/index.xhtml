@@ -11,6 +11,10 @@
             <h:inputText id="id" value="#{indexBean.statusTarefa.id}"/>
             <h:outputText value="Descrição:"/>
             <h:inputText id="Descricao" value="#{indexBean.statusTarefa.descricao}"/>
+            <h:outputText  id="label_texto" value="#{indexBean.label}"/>
+            <div>
+                <h:commandButton value="Clique para atualizar a label" actionListener="#{indexBean.retornarDados()}"/>
+            </div>
         </h:form> 
     </h:body>
 </html>

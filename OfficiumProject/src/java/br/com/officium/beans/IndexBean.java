@@ -21,11 +21,15 @@ import javax.persistence.Persistence;
 @RequestScoped
 public class IndexBean implements Serializable{
     private StatusTarefa statusTarefa;
+    private String label;
+    
+    
     
     
     @PostConstruct
     public void ini(){
         statusTarefa = new StatusTarefa();
+        this.label = "Clique no botão";
     }
 
     public StatusTarefa getStatusTarefa() {
@@ -34,5 +38,17 @@ public class IndexBean implements Serializable{
 
     public void setStatusTarefa(StatusTarefa statusTarefa) {
         this.statusTarefa = statusTarefa;
+    }
+    
+    public void retornarDados(){
+        this.label = "Descrição: "+this.statusTarefa.getDescricao()+" ID: "+this.getStatusTarefa().getId();
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }
