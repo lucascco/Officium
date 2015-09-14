@@ -19,10 +19,12 @@ and open the template in the editor.
     width: 30em;
     height: 20em;
     background-color: rgba(201, 210, 202, 0.62);
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
 }
 
-.status-concluida{
-    
+.status-afazer{
+    background-color: rgb(243, 150, 122) !important;
 }
 
 .box > .row{
@@ -50,4 +52,18 @@ img.bg {
     img.bg {
         left: 50%;
         margin-left: -512px; }
+}
+
+.jumbotron > .container-fluid{
+    height: 100%;
+}
+
+#form_relatorio input, select, textarea, .form-group{
+    width: 100% !important;
+}
+
+#form_relatorio .row{
+    margin-top: 1em;
+    margin-bottom: 1em;
+    
 }
