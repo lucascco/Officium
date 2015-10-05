@@ -34,6 +34,14 @@ public class PontuacaoUsuarioTarefa implements PojoBase{
     private Usuario usuario;
     @ManyToOne
     private Tarefa tarefa;
+
+    public PontuacaoUsuarioTarefa() {
+    }
+
+    public PontuacaoUsuarioTarefa(Long id) {
+        this.id = id;
+    }
+   
     
 
     @Override

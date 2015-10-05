@@ -31,6 +31,15 @@ public class TipoMensagem implements PojoBase{
 
     @Column(unique = true, length = 50)
     private String descricao;
+
+    public TipoMensagem() {
+    }
+
+    public TipoMensagem(Long id) {
+        this.id = id;
+    }
+
+    
     
     @Override
     public void setId(Long id) {

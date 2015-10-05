@@ -40,6 +40,13 @@ public class Usuario implements PojoBase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    public Usuario() {
+    }
+
+    public Usuario(Long id) {
+        this.id = id;
+    }
     
     @Override
     public void setId(Long id) {

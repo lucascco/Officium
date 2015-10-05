@@ -32,6 +32,14 @@ public class StatusTarefa implements PojoBase {
     @Column(unique = true, length = 50)
     private String descricao;
 
+    public StatusTarefa() {
+    }
+
+    public StatusTarefa(Long id) {
+        this.id = id;
+    }
+
+
     @Override
     public void setId(Long id) {
         this.id = id;

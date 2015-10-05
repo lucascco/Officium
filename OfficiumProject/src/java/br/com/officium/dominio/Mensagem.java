@@ -35,6 +35,13 @@ public class Mensagem implements PojoBase{
     @JoinColumn(name = "tipo_mensagem_id", nullable = false)
     private TipoMensagem tipoMensagem;
 
+    public Mensagem(Long id) {
+        this.id = id;
+    }
+
+    public Mensagem() {
+    }
+
     @Override
     public void setId(Long id) {
         this.id = id;

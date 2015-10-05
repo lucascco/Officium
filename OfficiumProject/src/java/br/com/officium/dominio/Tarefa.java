@@ -50,6 +50,15 @@ public class Tarefa implements PojoBase {
     @JoinColumn(name="status_tarefa_id")
     private StatusTarefa statusTarefa;
 
+    public Tarefa() {
+    }
+
+    public Tarefa(Long id) {
+        this.id = id;
+    }
+
+    
+    
     @Override
     public void setId(Long id) {
         this.id = id;
