@@ -1,0 +1,82 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form prependId="false"> 
+            <div class="container-fluid">
+                <div class="row">
+                    <div style="height: 100vh">
+                        <div class="col-lg-8 col-lg-offset-2 box" style="top: 30%">
+                            <div class="row">
+                                <div class="col-lg-8 col-lg-offset-3 col-lg-offset-4">
+                                    <h3>Criar uma nova conta no Officium</h3>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_nome_cad">Nome Completo: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_nome_cad" value="#{cadastroUsuarioBean.usuario.nome}"/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_email_cad">Email: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_email_cad" value="#{cadastroUsuarioBean.usuario.email}" />
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_nascimento_cad">Nascimento: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_nascimento_cad" value="#{cadastroUsuarioBean.usuario.nascimento}"/>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input id="teste_date" type="text" class="form-control"/>
+                                        <span class="input-group-addon" onclick="$('#teste_date').click()">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_user_cad">Usuario: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_user_cad" value="#{cadastroUsuarioBean.usuario.usuario}" />
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_senha_cad">Senha: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_senha_cad" value="#{cadastroUsuarioBean.usuario.senha}" />
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label for="ipt_senha_2_cad">Repetir Senha: </label>
+                                        <h:inputText styleClass="form-control" id="ipt_senha_2_cad" value="#{cadastroUsuarioBean.usuario.senha}"/>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-12" style="text-align: right">
+                                    <button type="submit" class="btn btn-default">Cadastrar</button>
+                                    <h:commandButton value="Cadastrar" actionListener="#{cadastroUsuarioBean.salvar()}"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </h:form> 
+    </h:body>
+</html>

@@ -69,7 +69,7 @@ public class JpaUtilTest {
         dao.salvar(statusTarefa);
     }
     
-//    @Test
+    @Test
     public void salvarVariosObjetos() throws Exception {
         
         StatusTarefaDaoImpl dao = new StatusTarefaDaoImpl();
@@ -95,7 +95,7 @@ public class JpaUtilTest {
         dao.excluir(statusTarefa);
     }
 
-    @Test
+//    @Test
     public void retornarTodosObjetos() throws Exception {
             StatusTarefaDaoImpl dao = new StatusTarefaDaoImpl();
 
@@ -113,7 +113,7 @@ public class JpaUtilTest {
 
     }
     
-    @Test
+//    @Test
     public void consultarPorParametro() throws Exception {
         StatusTarefaDaoImpl dao = new StatusTarefaDaoImpl();
         StatusTarefa statusTarefa = new StatusTarefa();

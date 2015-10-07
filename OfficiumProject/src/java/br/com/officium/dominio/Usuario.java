@@ -36,7 +36,11 @@ public class Usuario implements PojoBase {
     private String senha;
     @Temporal(TemporalType.TIMESTAMP)
     private Date nascimento;
-    
+    //no protótipo de telas, no cadastro existe um campo chamado usuário
+    @Column(length = 80)
+    private String usuario;
+
+        
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -81,6 +85,14 @@ public class Usuario implements PojoBase {
         return email;
     }
 
+    public String getUsuario() {
+        return usuario;
+    }
+    
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+    
     public void setEmail(String email) {
         this.email = email;
     }
