@@ -3,13 +3,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html">
     <h:head>
-        <title>Facelet Title</title>
-        <link rel="stylesheet" type="text/css" href="/static/css/style.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css"/>
-        <link rel="stylesheet" type="text/css" href="/static/css/cadastro_usuario.css"/>
-        <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/static/js/bootstrap-datetimepicker.js"></script>
-        <script type="text/javascript" src="/static/js/jquery-1.11.3.js"></script>
+        <title>Officium - Cadastro de  Usuario</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/cadastro_usuario.css"/>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/jquery-1.11.3.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/bootstrap-datetimepicker.js"></script>
     </h:head>
     <h:body>
         <h:form prependId="false"> 
@@ -26,13 +26,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_nome_cad" value="Nome Completo: " />
-                                        <h:inputText styleClass="form-control" id="ipt_nome_cad" value="#{cadastroUsuarioBean.usuario.nome}"/>
+                                        <h:inputText class="form-control" id="ipt_nome_cad" value="#{cadastroUsuarioBean.usuario.nome}"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_email_cad" value="Email: " />
-                                        <h:inputText styleClass="form-control" id="ipt_email_cad" value="#{cadastroUsuarioBean.usuario.email}"/>
+                                        <h:inputText class="form-control" id="ipt_email_cad" value="#{cadastroUsuarioBean.usuario.email}"/>
                                     </div>                                    
                                 </div>
                             </div>
@@ -40,21 +40,13 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_nascimento_cad" value="Nascimento: "/>
-                                        <h:inputText styleClass="form-control" id="ipt_nascimento_cad" value="#{cadastroUsuarioBean.usuario.nascimento}"/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <input id="teste_date" type="text" class="form-control"/>
-                                        <span class="input-group-addon" onclick="$('#teste_date').click()">
-                                            <span class="glyphicon glyphicon-calendar"></span>
-                                        </span>
+<!--                                        <h:inputText class="form-control" id="ipt_nascimento_cad" value="{cadastroUsuarioBean.usuario.nascimento}"/>-->
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_user_cad" value="Usuário: " />
-                                        <h:inputText styleClass="form-control" id="ipt_user_cad" value="#{cadastroUsuarioBean.usuario.usuario}" />
+                                        <h:inputText class="form-control" id="ipt_user_cad" value="#{cadastroUsuarioBean.usuario.usuario}" />
                                     </div>                                    
                                 </div>
                             </div>
@@ -62,20 +54,19 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_senha_cad" value="Senha: " />
-                                        <h:inputSecret styleClass="form-control" id="ipt_senha_cad" value="#{cadastroUsuarioBean.usuario.senha}" />
+                                        <h:inputSecret class="form-control" id="ipt_senha_cad" value="#{cadastroUsuarioBean.senha1}" />
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_senha_2_cad" value="Repetir Senha: " />
-                                        <h:inputSecret styleClass="form-control" id="ipt_senha_2_cad" value="#{cadastroUsuarioBean.usuario.senha}"/>
+                                        <h:inputSecret class="form-control" id="ipt_senha_2_cad" value="#{cadastroUsuarioBean.senha2}"/>
                                     </div>                                    
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-lg-12" style="text-align: right">
-                                    <button type="submit" class="btn btn-default">Cadastrar</button>
-                                    <h:commandButton value="Cadastrar" actionListener="#{cadastroUsuarioBean.salvar()}"/>
+                                    <h:commandButton class="form-control" value="Cadastrar" actionListener="#{cadastroUsuarioBean.salvar()}"/>
                                 </div>
                             </div>
                         </div>
@@ -84,5 +75,6 @@
             </div>
 
         </h:form> 
+
     </h:body>
 </html>

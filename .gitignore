@@ -15,3 +15,4 @@ hs_err_pid*
 /OfficiumProject/build/
 /OfficiumProject/dist/
 OfficiumProject/build.xml
+OfficiumProject/nbproject/build-impl.xml~
