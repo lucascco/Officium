@@ -13,5 +13,5 @@ import br.com.officium.dominio.Usuario;
  * @author Lucas Corrêa
  */
 public interface UsuarioDao extends GenericDao<Usuario>{
-    
+    public Usuario logon(String name, String senha) throws Exception;
 }

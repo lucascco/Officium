@@ -22,6 +22,7 @@ public interface GenericDao<T> {
     public void salvarVarios(final T... objs) throws Exception;
     public void excluir(final T obj) throws Exception;
     public void atualizarCampos(Map<String, String> valores, Long id) throws Exception;
+    public T consultarPorId(Long id);
     public abstract List<T> consultar(int start, int maxResult, T obj) throws Exception;
     public abstract Long consultarQtd(T obj) throws Exception;
     

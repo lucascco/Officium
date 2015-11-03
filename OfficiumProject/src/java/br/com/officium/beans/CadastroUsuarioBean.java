@@ -44,7 +44,7 @@ public class CadastroUsuarioBean implements Serializable{
 
     public void salvar() {
         if (validarCadastro()) {
-            usuario.setSenha(senha1);
+            usuario.setPassword(senha1);
             try {
                 this.getUsuarioDao().salvar(usuario);
             } catch (Exception ex) {

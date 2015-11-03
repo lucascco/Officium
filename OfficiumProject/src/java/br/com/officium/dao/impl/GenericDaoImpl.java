@@ -29,6 +29,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
 
     protected Class<T> c;
     private EntityManager entityManager;
+    private Root<T> objetoRoot;
 
     public GenericDaoImpl(Class<T> c) {
         this.c = c;
@@ -80,6 +81,11 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     }
 
     @Override
+    public T consultarPorId(Long id) {
+        return this.getEntityManager().find(c, id);
+    }
+
+    @Override
     public void atualizarCampos(Map<String, String> valores, Long id) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
@@ -90,7 +96,7 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
     @Override
     public abstract Long consultarQtd(T obj) throws Exception;
 
-    protected    EntityManager getEntityManager() {
+    protected EntityManager getEntityManager() {
         if (this.entityManager == null) {
             this.entityManager = JpaUtil.getEntityManager();
         }
@@ -101,24 +107,33 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         CriteriaBuilder builder = this.getEntityManager().getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = builder.createQuery(c);
         Root<T> objeto = criteriaQuery.from(c);
+        setObjetoRoot(objeto);
         criteriaQuery.select(objeto);
         return criteriaQuery;
     }
-    
-    protected CriteriaQuery<T> criarPredicadoEqual(CriteriaBuilder builder, Map<String, Object> predicadosMap){
+
+    protected CriteriaQuery<T> criarPredicadoEqual(CriteriaBuilder builder, Map<String, Object> predicadosMap) {
         CriteriaQuery<T> criteriaQuery = builder.createQuery(c);
         Root<T> objeto = criteriaQuery.from(c);
         List<Predicate> predicates = new ArrayList<>();
         for (Map.Entry<String, Object> entrySet : predicadosMap.entrySet()) {
             String key = entrySet.getKey();
             Object value = entrySet.getValue();
-            
+
             predicates.add(builder.equal(objeto.get(key), value));
-            
+
         }
         criteriaQuery.select(objeto);
         criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
         return criteriaQuery;
+    }
+
+    public Root<T> getObjetoRoot() {
+        return objetoRoot;
+    }
+
+    public void setObjetoRoot(Root<T> objetoRoot) {
+        this.objetoRoot = objetoRoot;
     }
 
 }

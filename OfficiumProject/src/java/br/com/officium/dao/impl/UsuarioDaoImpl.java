@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 /**
  *
@@ -37,6 +38,20 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements UsuarioDa
     @Override
     public Long consultarQtd(Usuario obj) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Usuario logon(String name, String senha) throws Exception {
+        List<Predicate> predicados = new ArrayList<>();
+        CriteriaQuery<Usuario> criteriaQuery = criarCriteriaQuery();
+        CriteriaBuilder builder = super.getEntityManager().getCriteriaBuilder();
+        EntityType<Usuario> type = super.getEntityManager().getMetamodel().entity(Usuario.class);
+        predicados.add(builder.and(
+                builder.equal(getObjetoRoot().get("nome"), name),
+                builder.equal(getObjetoRoot().get("email"), senha)));
+        criteriaQuery.where(predicados.toArray(new Predicate[predicados.size()]));
+        TypedQuery<Usuario> query = this.getEntityManager().createQuery(criteriaQuery);
+        return query.getSingleResult();
     }
 
 

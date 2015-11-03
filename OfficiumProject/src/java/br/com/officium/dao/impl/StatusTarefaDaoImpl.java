@@ -8,14 +8,12 @@ package br.com.officium.dao.impl;
 import br.com.officium.dao.StatusTarefaDao;
 import br.com.officium.dominio.StatusTarefa;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 /**
  *
@@ -32,13 +30,18 @@ public class StatusTarefaDaoImpl extends GenericDaoImpl<StatusTarefa> implements
         List<Predicate> predicados = new ArrayList<>();
         CriteriaQuery<StatusTarefa> criteriaQuery = criarCriteriaQuery();
         CriteriaBuilder builder = super.getEntityManager().getCriteriaBuilder();
+        EntityType<StatusTarefa> type = super.getEntityManager().getMetamodel().entity(StatusTarefa.class);
 
         if (obj.getId() != null && obj.getId() != 0) {
-            predicados.add(builder.equal(criteriaQuery.from(c).get("id"), obj.getId()));
+            predicados.add(builder.equal(getObjetoRoot().get("id"), obj.getId()));
         } else if (obj.getDescricao() != null) {
-            predicados.add(builder.like(criteriaQuery.from(c).get("descricao"), obj.getDescricao()));
+            predicados.add(
+                    builder.like(
+                            builder.lower(
+                                    getObjetoRoot().get(type.getDeclaredSingularAttribute("descricao", String.class))
+                            ),"%"+obj.getDescricao().toLowerCase()+"%")
+            );
         }
-        criteriaQuery.select(criteriaQuery.from(c));
         criteriaQuery.where(predicados.toArray(new Predicate[predicados.size()]));
         TypedQuery<StatusTarefa> query = this.getEntityManager().createQuery(criteriaQuery);
         return query.getResultList();

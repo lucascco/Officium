@@ -6,15 +6,10 @@ package br.com.officium.utils;
  * and open the template in the editor.
  */
 import br.com.officium.dao.GenericDao;
-import br.com.officium.dao.impl.GenericDaoImpl;
 import br.com.officium.dao.impl.StatusTarefaDaoImpl;
 import br.com.officium.dominio.StatusTarefa;
 import java.util.List;
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -58,7 +53,7 @@ public class JpaUtilTest {
         EntityManager entityManager = JpaUtil.getEntityManager();
     }
 
-//    @Test
+    @Test
     public void salvarObjetos() throws Exception {
         GenericDao dao;
         dao = new StatusTarefaDaoImpl();
@@ -69,7 +64,7 @@ public class JpaUtilTest {
         dao.salvar(statusTarefa);
     }
     
-    @Test
+//    @Test
     public void salvarVariosObjetos() throws Exception {
         
         StatusTarefaDaoImpl dao = new StatusTarefaDaoImpl();
