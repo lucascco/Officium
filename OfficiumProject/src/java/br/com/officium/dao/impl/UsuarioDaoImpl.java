@@ -7,12 +7,14 @@ package br.com.officium.dao.impl;
 
 import br.com.officium.dao.StatusTarefaDao;
 import br.com.officium.dao.UsuarioDao;
+import br.com.officium.dominio.AutorizacaoUsuario;
 import br.com.officium.dominio.StatusTarefa;
 import br.com.officium.dominio.Usuario;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -28,6 +30,21 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements UsuarioDa
 
     public UsuarioDaoImpl() {
         super(Usuario.class);
+    }
+
+    public void salvar(Usuario obj, AutorizacaoUsuario autorizacaoUsuario) throws Exception {
+        EntityTransaction transaction = this.getEntityManager().getTransaction();
+        try {
+            transaction.begin();
+            this.getEntityManager().persist(obj);
+            this.getEntityManager().persist(autorizacaoUsuario);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive() && transaction.getRollbackOnly()) {
+                transaction.rollback();
+            }
+            throw e;
+        }
     }
 
     @Override
@@ -53,7 +70,5 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements UsuarioDa
         TypedQuery<Usuario> query = this.getEntityManager().createQuery(criteriaQuery);
         return query.getSingleResult();
     }
-
-
 
 }

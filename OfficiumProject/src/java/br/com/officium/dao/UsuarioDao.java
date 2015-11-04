@@ -5,6 +5,7 @@
  */
 package br.com.officium.dao;
 
+import br.com.officium.dominio.AutorizacaoUsuario;
 import br.com.officium.dominio.StatusTarefa;
 import br.com.officium.dominio.Usuario;
 
@@ -14,4 +15,5 @@ import br.com.officium.dominio.Usuario;
  */
 public interface UsuarioDao extends GenericDao<Usuario>{
     public Usuario logon(String name, String senha) throws Exception;
+    public void salvar(Usuario obj, AutorizacaoUsuario autorizacaoUsuario) throws Exception;
 }

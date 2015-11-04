@@ -53,7 +53,7 @@ public class JpaUtilTest {
         EntityManager entityManager = JpaUtil.getEntityManager();
     }
 
-    @Test
+//    @Test
     public void salvarObjetos() throws Exception {
         GenericDao dao;
         dao = new StatusTarefaDaoImpl();
