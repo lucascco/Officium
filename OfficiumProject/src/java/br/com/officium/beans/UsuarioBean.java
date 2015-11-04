@@ -5,12 +5,14 @@
  */
 package br.com.officium.beans;
 
-import br.com.officium.dominio.StatusTarefa;
+import br.com.officium.dao.UsuarioDao;
+import br.com.officium.dao.impl.UsuarioDaoImpl;
 import br.com.officium.dominio.Usuario;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -26,7 +28,7 @@ import org.springframework.security.core.userdetails.User;
 public class UsuarioBean implements Serializable{
     
     private Usuario usuario;
-    
+    private UsuarioDao usuarioDao;
     
     @PostConstruct
     public void ini(){
@@ -36,9 +38,17 @@ public class UsuarioBean implements Serializable{
         if(context instanceof SecurityContext){
             Authentication authentication = context.getAuthentication();
             if(authentication instanceof Authentication){
+                try {
+                    usuario = getUsuarioDao().logon(((User)authentication.getPrincipal()).getUsername(),
+                            ((User)authentication.getPrincipal()).getPassword());
+                } catch (Exception ex) {
+                    Logger.getLogger(UsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 usuario.setUsername(((User)authentication.getPrincipal()).getUsername());
             }
         }
+        
+        
     }
 
     public Usuario getUsuario() {
@@ -47,6 +57,13 @@ public class UsuarioBean implements Serializable{
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    public UsuarioDao getUsuarioDao() {
+        if(usuarioDao == null){
+            usuarioDao = new UsuarioDaoImpl();
+        }
+        return usuarioDao;
     }
 
 }
