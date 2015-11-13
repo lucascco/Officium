@@ -65,7 +65,8 @@ public class UsuarioDaoImpl extends GenericDaoImpl<Usuario> implements UsuarioDa
         EntityType<Usuario> type = super.getEntityManager().getMetamodel().entity(Usuario.class);
         predicados.add(builder.and(
                 builder.equal(getObjetoRoot().get("username"), name),
-                builder.equal(getObjetoRoot().get("password"), senha)));
+                builder.equal(getObjetoRoot().get("password"), senha),
+                builder.equal(getObjetoRoot().get("enable"), true)));
         criteriaQuery.where(predicados.toArray(new Predicate[predicados.size()]));
         TypedQuery<Usuario> query = this.getEntityManager().createQuery(criteriaQuery);
         return query.getSingleResult();

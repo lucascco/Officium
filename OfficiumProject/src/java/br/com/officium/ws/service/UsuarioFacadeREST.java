@@ -5,112 +5,101 @@
  */
 package br.com.officium.ws.service;
 
-import br.com.officium.dao.GenericDao;
 import br.com.officium.dao.UsuarioDao;
-import br.com.officium.dao.impl.GenericDaoImpl;
 import br.com.officium.dao.impl.UsuarioDaoImpl;
+import br.com.officium.dominio.Autorizacao;
+import br.com.officium.dominio.AutorizacaoUsuario;
 import br.com.officium.dominio.Usuario;
-import java.util.List;
+import br.com.officium.ws.service.utils.JsonGenerator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
+import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 
 /**
  *
  * @author Lucas Corrêa
  */
-@Path("/UsuarioService")
+@Path("UsuarioService")
 public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
-    
+
     private UsuarioDao usuarioDao;
-    
 
     public UsuarioFacadeREST() {
         super(Usuario.class);
     }
 
     @POST
-    @Override
-    @Consumes({"application/xml", "application/json"})
-    public void create(Usuario entity) {
+    @Path("create")
+    @Produces("application/json")
+    public String create(@FormParam("jsonUsuario") String strUsuario) {
+        String result;
         try {
-            super.create(entity);
+            if (strUsuario != null && !strUsuario.isEmpty()) {
+                Usuario u = (Usuario) JsonGenerator.generateTOfromJson(strUsuario, Usuario.class);
+                if (u != null) {
+                    AutorizacaoUsuario au = new AutorizacaoUsuario();
+                    au.setAutorizacao(new Autorizacao(1l));
+                    au.setUsuario(u);
+                    getGenericDao().salvar(u, au);
+                    result = JsonGenerator.generateSuccessJson("Usuario criado com sucesso!");
+                }else{
+                    throw new Exception("jsonUsuario inválido");
+                }
+            } else {
+                throw new Exception("jsonUsuario inválido");
+            }
+
         } catch (Exception ex) {
+            result = JsonGenerator.generateErrorJson(ex, -1);
             Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return result;
     }
 
-    @PUT
-    @Path("{id}")
-    @Consumes({"application/xml", "application/json"})
-    public void edit(@PathParam("id") Long id, Usuario entity) {
+    @POST
+    @Path("login")
+    @Produces("application/json")
+    public String login(@FormParam("userString") String user) {
+        String result;
         try {
-            super.edit(entity);
-        } catch (Exception ex) {
-            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            Usuario u = (Usuario) JsonGenerator.generateTOfromJson(user, Usuario.class);
+            Usuario usuarioLogin = getGenericDao().logon(u.getUsername(), u.getPassword());
+            if (usuarioLogin == null) {
+                throw new Exception("Autenticação inválida");
+            }
+            result = JsonGenerator.generateSuccessJson("Usuario Existe");
+            return result;
+        } catch (Exception e) {
+            result = JsonGenerator.generateErrorJson(e, -1);
         }
-    }
-
-    @DELETE
-    @Path("{id}")
-    public void remove(@PathParam("id") Long id) {
-        try {
-            super.remove(super.find(id));
-        } catch (Exception ex) {
-            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        return result;
     }
 
     @GET
-    @Path("{id}")
-    @Produces({"application/xml", "application/json"})
-    public Usuario find(@PathParam("id") Long id) {
-        return super.find(id);
-    }
-
-    @GET
-    @Override
-    @Produces({"application/xml", "application/json"})
-    public List<Usuario> findAll() {
+    @Path("AllUsers")
+    @Produces("application/json")
+    public String findAllUsers() {
+        String result;
         try {
-            return super.findAll();
+            result = JsonGenerator.generateJson(super.findAll());
         } catch (Exception ex) {
             Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            result = JsonGenerator.generateErrorJson(ex, -1);
         }
-        return null;
+        return result;
     }
-
-//    @GET
-//    @Path("{from}/{to}")
-//    @Produces({"application/xml", "application/json"})
-//    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-//        return super.findRange(new int[]{from, to});
-//    }
-//
-//    @GET
-//    @Path("count")
-//    @Produces("text/plain")
-//    public String countREST() {
-//        return String.valueOf(super.count());
-//    }
-
-
 
     @Override
-    public GenericDao<Usuario> getGenericDao() {
-       if(usuarioDao == null){
-           usuarioDao = new UsuarioDaoImpl();
-       }
-       return usuarioDao;
+    public UsuarioDao getGenericDao() {
+        if (usuarioDao == null) {
+            usuarioDao = new UsuarioDaoImpl();
+        }
+        return usuarioDao;
     }
-    
+
 }
