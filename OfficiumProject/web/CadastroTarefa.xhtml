@@ -55,13 +55,7 @@ and open the template in the editor.
                                 </div>
                             </div>
                             
-                            codigo
-                            tarefa nome
-                            criacao data
-                            finalização data
-                            importancia menu
-                            descrição
-                            
+                                                    
                             
                             <div class="row">
                                 <div class="col-lg-6">
@@ -123,10 +117,10 @@ and open the template in the editor.
                             
                             
                             <h:messages globalOnly="true" />
-                            <h:inputHidden id="ipt_sucesso" value="#{cadastroUsuarioBean.sucesso_salvar}"/>
+                            <h:inputHidden id="ipt_sucesso" value="#{cadastroTarefaBean.tarefa.salvar()}"/>
                             <div class="row">
                                 <div class="col-lg-4 col-lg-offset-6">
-                                    <h:commandButton type="submit" class="form-control btn-success" value="#{app['bttn.cadastrar']}" actionListener="#{cadastroUsuarioBean.salvar()}"/>
+                                    <h:commandButton type="submit" class="form-control btn-success" value="#{app['bttn.cadastrar']}" actionListener="#{cadastroTarefaBean.salvar()}"/>
                                 </div>
                             </div>
                         </div>
