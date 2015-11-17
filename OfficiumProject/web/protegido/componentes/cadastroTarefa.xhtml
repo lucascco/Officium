@@ -5,11 +5,28 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <!DOCTYPE html>
-<ui xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core">  
-    <ui:composition>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"> 
+
+
+    <h:head>
+        <title>Officium - Cadastro de Tarefas</title>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/style.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/bootstrap.min.css"/>
+        <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/cadastro_usuario.css"/>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/jquery-1.11.3.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/inputmask.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/jquery.inputmask.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/CadastroUsuario/cadastro.usuario.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/script.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/bootstrap.min.js"></script>        
+    </h:head>
+
+
+
+    <h:body>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">
@@ -17,21 +34,21 @@ and open the template in the editor.
                 </h3>
             </div>
             <div class="panel-body">
-                <form id="form_relatorio" class="form-inline">
+                <h:form id="form_cadastroTarefa" class="form-inline" prependId="false">
                     <div class="container-fluid">
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_codigo_cad_tarefa" value="#{app['label.codigo']}" />
-                                        <h:inputText label="#{app['label.codigo']}" required="true" class="form-control" id="ipt_codigo_cad_tarefa" value="#{cadastroTarefaBean.tarefa.id}"/>
-                                        <h:message for="ipt_codigo_cad_tarefa" style="color:red" />
+                                    <h:inputText label="#{app['label.codigo']}" required="true" class="form-control" id="ipt_codigo_cad_tarefa" value="#{cadastroTarefaBean.tarefa.id}"/>
+                                    <h:message for="ipt_codigo_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_nome_cad_tarefa" value="#{app['label.tarefa']} " />
-                                        <h:inputText label="#{app['label.tarefa']}" required="true" class="form-control" id="ipt_nome_cad_tarefa" value="#{cadastroTarefaBean.tarefa.nome}"/>
-                                        <h:message for="ipt_nome_cad_tarefa" style="color:red" />
+                                    <h:inputText label="#{app['label.tarefa']}" required="true" class="form-control" id="ipt_nome_cad_tarefa" value="#{cadastroTarefaBean.tarefa.nome}"/>
+                                    <h:message for="ipt_nome_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
                         </div>
@@ -39,19 +56,19 @@ and open the template in the editor.
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_criacao_cad_tarefa" value="#{app['label.criacao']}"/>
-                                        <h:inputText label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.inicio}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:inputText>
-                                        <h:message for="ipt_criacao_cad_tarefa" style="color:red" />
+                                    <h:inputText label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.inicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:inputText>
+                                    <h:message for="ipt_criacao_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_duracao_cad_tarefa" value="#{app['label.finalizacao']}"/>
-                                        <h:inputText label="#{app['label.finalizacao']}" class="form-control" id="ipt_duracao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.duracao}">
-                                            <f:convertDateTime pattern="dd/MM/yyyy"/>
-                                        </h:inputText>
-                                        <h:message for="ipt_duracao_cad_tarefa" style="color:red" />
+                                    <h:inputText label="#{app['label.finalizacao']}" class="form-control" id="ipt_duracao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.duracao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                    </h:inputText>
+                                    <h:message for="ipt_duracao_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
                         </div>
@@ -70,13 +87,13 @@ and open the template in the editor.
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_importancia_cad_tarefa" value="#{app['label.importancia']}" />
-                                        <h:selectOneMenu label="#{app['label.importancia']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.importancia}">
-                                            <f:selectItem id="importancia_urgente" itemLabel="Urgente" itemValue="1" />
-                                            <f:selectItem id="importancia_normal" itemLabel="Normal" itemValue="2" />
-                                            <f:selectItem id="importancia_baixa" itemLabel="Baixa" itemValue="3" />
-                                            
-                                        </h:selectOneMenu>
-                                        <h:message for="ipt_importancia_cad_tarefa" style="color: red"/>
+                                    <h:selectOneMenu label="#{app['label.importancia']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.importancia}">
+                                        <f:selectItem id="importancia_urgente" itemLabel="Urgente" itemValue="1" />
+                                        <f:selectItem id="importancia_normal" itemLabel="Normal" itemValue="2" />
+                                        <f:selectItem id="importancia_baixa" itemLabel="Baixa" itemValue="3" />
+
+                                    </h:selectOneMenu>
+                                    <h:message for="ipt_importancia_cad_tarefa" style="color: red"/>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +101,8 @@ and open the template in the editor.
                             <div class="col-md-8">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_descricao_cad_tarefa" value="#{app['label.descricao']}" />
-                                        <h:inputTextarea label="#{app['label.descricao']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.descricao}"/>
-                                        <h:message for="ipt_descricao_cad_tarefa" style="color: red"/>
+                                    <h:inputTextarea label="#{app['label.descricao']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.descricao}"/>
+                                    <h:message for="ipt_descricao_cad_tarefa" style="color: red"/>
                                 </div>
                             </div>                            
                         </div>                            
@@ -95,8 +112,9 @@ and open the template in the editor.
                             </div>
                         </div>
                     </div>
-                </form>
+                </h:form>
             </div>
         </div>
-    </ui:composition>
-</ui>
+    </h:body>
+</html>
+
