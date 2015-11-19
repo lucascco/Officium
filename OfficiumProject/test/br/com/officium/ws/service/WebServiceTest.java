@@ -7,6 +7,8 @@ package br.com.officium.ws.service;
 
 import br.com.officium.dominio.Usuario;
 import br.com.officium.ws.service.utils.JsonGenerator;
+import br.com.officium.ws.service.utils.SucessJson;
+import com.google.gson.Gson;
 import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.api.client.config.ClientConfig;
@@ -14,6 +16,7 @@ import com.sun.jersey.api.client.config.DefaultClientConfig;
 import com.sun.jersey.api.representation.Form;
 import java.net.URI;
 import javax.ws.rs.core.UriBuilder;
+import junit.framework.Assert;
 import org.junit.Test;
 
 /**
@@ -23,14 +26,16 @@ import org.junit.Test;
 public class WebServiceTest {
 
     private final WebResource service;
+    private final Gson gson;
     
     public WebServiceTest() {
         ClientConfig config = new DefaultClientConfig();
         Client client = Client.create(config);
         service = client.resource(getBaseURI());
+        gson = new Gson();
     }
     
-//    @Test
+    @Test
     public void fazerLoginWebService(){
         Usuario usuario = new Usuario();
         usuario.setPassword("123456");
@@ -38,11 +43,15 @@ public class WebServiceTest {
         
         Form form = new Form();
         form.add("userString", JsonGenerator.generateJson(usuario));
-        service.path("rest").path("UsuarioService").path("login")
-        .post(form);
+        String result = service.path("rest").path("UsuarioService").path("login")
+        .post(String.class, form);
+        
+        SucessJson response = gson.fromJson(result, SucessJson.class);
+        
+        Assert.assertTrue(response.getCode() != - 1);
     }
     
-    @Test
+//    @Test
     public void cadastrarUsuarioWebService(){
         Usuario usuario = new Usuario();
         usuario.setPassword("123456");
@@ -52,8 +61,13 @@ public class WebServiceTest {
         
         Form form = new Form();
         form.add("jsonUsuario", JsonGenerator.generateJson(usuario));
-        service.path("rest").path("UsuarioService").path("create")
-        .post(form);
+        String result = service.path("rest").path("UsuarioService").path("create")
+        .post(String.class ,form);
+        
+        SucessJson response = gson.fromJson(result, SucessJson.class);
+        
+        Assert.assertTrue(response.getCode() != - 1);
+        
     }
 
     private static URI getBaseURI() {

@@ -9,27 +9,24 @@ import br.com.officium.dominio.StatusTarefa;
 import java.io.Serializable;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 
 /**
  *
  * @author Lucas Corrêa
  */
 @ManagedBean(name = "indexBean")
-@RequestScoped
+@SessionScoped
 public class IndexBean implements Serializable{
     private StatusTarefa statusTarefa;
     private String label;
-    
-    
-    
     
     @PostConstruct
     public void ini(){
         statusTarefa = new StatusTarefa();
         this.label = "Clique no botão";
     }
-
+    
     public StatusTarefa getStatusTarefa() {
         return statusTarefa;
     }

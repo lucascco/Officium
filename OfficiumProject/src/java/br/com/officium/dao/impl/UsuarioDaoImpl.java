@@ -5,21 +5,16 @@
  */
 package br.com.officium.dao.impl;
 
-import br.com.officium.dao.StatusTarefaDao;
 import br.com.officium.dao.UsuarioDao;
 import br.com.officium.dominio.AutorizacaoUsuario;
-import br.com.officium.dominio.StatusTarefa;
 import br.com.officium.dominio.Usuario;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import javax.persistence.metamodel.EntityType;
 
 /**

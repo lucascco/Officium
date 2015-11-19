@@ -19,6 +19,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 
 /**
  *
@@ -47,7 +48,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
                     au.setUsuario(u);
                     getGenericDao().salvar(u, au);
                     result = JsonGenerator.generateSuccessJson("Usuario criado com sucesso!");
-                }else{
+                } else {
                     throw new Exception("jsonUsuario inválido");
                 }
             } else {
@@ -87,6 +88,21 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         String result;
         try {
             result = JsonGenerator.generateJson(super.findAll());
+        } catch (Exception ex) {
+            Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+            result = JsonGenerator.generateErrorJson(ex, -1);
+        }
+        return result;
+    }
+
+    @GET
+    @Path("UsersById")
+    @Produces("application/json")
+    public String findByIdUsers(@QueryParam("id") String idString) {
+        String result;
+        try {
+            Long id = Long.parseLong(idString);
+            result = JsonGenerator.generateJson(getGenericDao().consultarPorId(id));
         } catch (Exception ex) {
             Logger.getLogger(UsuarioFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
             result = JsonGenerator.generateErrorJson(ex, -1);

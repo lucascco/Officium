@@ -6,6 +6,7 @@
 package br.com.officium.dao.impl;
 
 import br.com.officium.dao.GenericDao;
+import br.com.officium.dominio.Tarefa;
 import br.com.officium.utils.JpaUtil;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import javax.persistence.metamodel.EntityType;
 
 /**
  *
@@ -112,6 +114,29 @@ public abstract class GenericDaoImpl<T> implements GenericDao<T> {
         return criteriaQuery;
     }
 
+    protected List<Predicate> criarPredicados(Map<String, Object> mapsValues, List<Integer> op, CriteriaBuilder builder) {
+        List<Predicate> listPredicates = new ArrayList<>();
+        EntityType<T> type = getEntityManager().getMetamodel().entity(c);
+        int pos = 0;
+        for(Map.Entry<String, Object> entrySet : mapsValues.entrySet()){
+            String field = entrySet.getKey();
+            Object value = entrySet.getValue();
+            if(op.get(pos) == 0){
+                listPredicates.add(builder.equal(getObjetoRoot().get(field), value));
+            }else if(op.get(pos) == 1){
+                listPredicates.add(builder.like(
+                        builder.lower(getObjetoRoot().get(type.getDeclaredSingularAttribute(field, String.class))
+                        ), "%"+value.toString().toLowerCase()+"%")
+                );
+            }
+            pos++;
+        }
+        
+        return listPredicates;
+    }
+
+    
+    
     protected CriteriaQuery<T> criarPredicadoEqual(CriteriaBuilder builder, Map<String, Object> predicadosMap) {
         CriteriaQuery<T> criteriaQuery = builder.createQuery(c);
         Root<T> objeto = criteriaQuery.from(c);

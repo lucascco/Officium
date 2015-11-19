@@ -15,8 +15,5 @@ import br.com.officium.dominio.Tarefa;
  * @author Lucas Corrêa
  */
 public interface TarefaDao extends GenericDao<Tarefa>{    
-    
-    @Override
-    public void salvar(Tarefa obj) throws Exception;
 
 }
