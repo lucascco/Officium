@@ -8,6 +8,7 @@ package br.com.officium.dao;
 import br.com.officium.dominio.AutorizacaoUsuario;
 import br.com.officium.dominio.StatusTarefa;
 import br.com.officium.dominio.Tarefa;
+import java.util.List;
 
 
 /**
@@ -15,5 +16,4 @@ import br.com.officium.dominio.Tarefa;
  * @author Lucas Corrêa
  */
 public interface TarefaDao extends GenericDao<Tarefa>{    
-
 }
