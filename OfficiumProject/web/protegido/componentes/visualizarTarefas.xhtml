@@ -12,7 +12,7 @@ and open the template in the editor.
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">  
     <ui:composition>
         <h:form id="form_tarefas">
-            <div class="panel panel-default">
+            <div class="panel panel-default" style="height: 100%;">
                 <div class="panel-heading">
                     <h3 class="panel-title">
                         Tarefas - #{titulo}
@@ -21,9 +21,9 @@ and open the template in the editor.
                 <div class="panel-body">
                     <h:panelGroup layout="block">
                         <c:forEach items="#{visualizarTarefasBean.listTarefas}" var="obj" varStatus="theCount">
-                            <div class="jumbotron box-tarefa status-afazer">
+                            <div class="jumbotron box-tarefa status-#{obj.statusTarefa.id}">
                                 <div class="container-fluid">
-                                    <div class="row">
+                                    <div class="row" style="height: 6em;">
                                         <div class="col-md-8">
                                             <h3>#{obj.nome}</h3>
                                         </div>
@@ -31,16 +31,15 @@ and open the template in the editor.
                                             <h6>Código: #{obj.id}</h6>
                                         </div>
                                     </div>
-                                    <div class="row">
+                                    <div class="row" style="height: 5.5em">
                                         <div class="col-md-12">
                                             <h5>#{obj.descricao}</h5>
                                         </div>
                                     </div>
-                                    <div class="row" style="height: 100%">
-                                        <div class="col-md-12" style="top: 40%;">
+                                    <div class="row">
+                                        <div class="col-md-12">
                                             <div class="progress">
-                                                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
-                                                    <span class="sr-only">60% Complete</span>
+                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: #{obj.calcularProgresso()}%;">
                                                 </div>
                                             </div>
                                         </div>

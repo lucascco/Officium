@@ -45,7 +45,7 @@ public class VisualizarTarefasBean implements Serializable {
 
         tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
         statusTarefa.setId(this.idStatus);
-        tarefa.setStatusTarefa(statusTarefa);
+        //tarefa.setStatusTarefa(statusTarefa);
         try {
             listTarefas = getTarefaDao().consultar(0, 0, tarefa);
 //            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().;

@@ -59,7 +59,11 @@ public class Tarefa implements PojoBase {
         this.id = id;
     }
 
-    
+    public long calcularProgresso(){
+        long tempoTotal = getDuracao().getTime() - getInicio().getTime();
+        long tempoDecorrido = new Date().getTime() - getInicio().getTime();
+        return((tempoDecorrido*100l)/tempoTotal);
+    }
     
     @Override
     public void setId(Long id) {

@@ -73,7 +73,8 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
             if (usuarioLogin == null) {
                 throw new Exception("Autenticação inválida");
             }
-            result = JsonGenerator.generateSuccessJson("Usuario Existe");
+            result = JsonGenerator.generateJson(usuarioLogin);
+//            result = JsonGenerator.generateSuccessJson("Usuario Existe");
             return result;
         } catch (Exception e) {
             result = JsonGenerator.generateErrorJson(e, -1);

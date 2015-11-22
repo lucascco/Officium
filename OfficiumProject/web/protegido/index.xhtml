@@ -12,6 +12,10 @@
         <link rel="stylesheet" type="text/css" href="#{facesContext.externalContext.requestContextPath}/static/css/bootstrap.min.css"/>
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/jquery-1.11.3.js"></script>
         <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/inputmask.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/jquery.inputmask.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/script.js"></script>
+        <script type="text/javascript" src="#{facesContext.externalContext.requestContextPath}/static/js/index.js"></script>
         <script type='text/javascript'>
             function clickTarefas(idStatus) {
                 var input = document.getElementById('input_status');
@@ -37,7 +41,7 @@
                                     <span class="caret"></span>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <li ><a href="#tarefas_concluidas" onclick="clickTarefas(1)" data-toggle="tab" aria-controls="tarefas_concluidas">Concluidas</a></li>
+                                    <li ><a href="#tarefas_concluidas" onclick="clickTarefas(2)" data-toggle="tab" aria-controls="tarefas_concluidas">Concluidas</a></li>
                                     <li ><a href="#tarefas_atrasadas" data-toggle="tab" aria-controls="tarefas_atrasadas">Atrasadas</a></li>
                                     <li ><a href="#tarefas_a_fazer" data-toggle="tab" aria-controls="tarefas_a_fazer">A Fazer</a></li>
                                     <li ><a href="#tarefas_andamento" data-toggle="tab" aria-controls="tarefas_andamento">Em Curso</a></li>
