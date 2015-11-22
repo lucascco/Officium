@@ -11,6 +11,7 @@ import br.com.officium.dominio.Autorizacao;
 import br.com.officium.dominio.AutorizacaoUsuario;
 import br.com.officium.dominio.Usuario;
 import java.io.Serializable;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -18,33 +19,52 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.event.AjaxBehaviorEvent;
 
 /**
  *
- * @author marlo
+ * @author lucas.carvalho
  */
 @ManagedBean(name = "cadastroUsuarioBean")
 @RequestScoped
 public class CadastroUsuarioBean implements Serializable {
-
+    
+    private String msgUsuarioNaoExiste;
     private UsuarioDao usuarioDao;
     private Usuario usuario;
     private String senha1;
     private String senha2;
     private boolean sucesso_salvar = false;
-
+    
     @PostConstruct
     public void init() {
         usuario = new Usuario();
     }
-
+    
+    public void verficarUsername(AjaxBehaviorEvent event) {
+        if (usuario.getUsername() != null
+                && !usuario.getUsername().isEmpty()) {
+            try {
+                Usuario usuarioDel = new Usuario();
+                usuarioDel.setUsername(usuario.getUsername());
+                List<Usuario> usuarios = getUsuarioDao().consultar(0, 0, usuarioDel);
+                if (!usuarios.isEmpty()) {
+                    usuario.setUsername("");
+                    this.msgUsuarioNaoExiste = "Usuário já existe";
+                }
+            } catch (Exception ex) {
+                Logger.getLogger(CadastroTarefaBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
     public boolean validarCadastro() {
         if (senha1 != null && senha2 != null && senha1.equals(senha2)) {
             return true;
         }
         return false;
     }
-
+    
     public void salvar() {
         if (validarCadastro()) {
             usuario.setPassword(senha1);
@@ -65,46 +85,54 @@ public class CadastroUsuarioBean implements Serializable {
                 Logger.getLogger(CadastroUsuarioBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
     }
-
+    
     public Usuario getUsuario() {
         return usuario;
     }
-
+    
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
     }
-
+    
     public UsuarioDao getUsuarioDao() {
         if (usuarioDao == null) {
             usuarioDao = new UsuarioDaoImpl();
         }
         return usuarioDao;
     }
-
+    
     public String getSenha1() {
         return senha1;
     }
-
+    
     public void setSenha1(String senha1) {
         this.senha1 = senha1;
     }
-
+    
     public String getSenha2() {
         return senha2;
     }
-
+    
     public void setSenha2(String senha2) {
         this.senha2 = senha2;
     }
-
+    
     public boolean getSucesso_salvar() {
         return sucesso_salvar;
     }
-
+    
     public void setSucesso_salvar(boolean sucesso_salvar) {
         this.sucesso_salvar = sucesso_salvar;
     }
 
+    public String getMsgUsuarioNaoExiste() {
+        return msgUsuarioNaoExiste;
+    }
+
+    public void setMsgUsuarioNaoExiste(String msgUsuarioNaoExiste) {
+        this.msgUsuarioNaoExiste = msgUsuarioNaoExiste;
+    }
+    
 }

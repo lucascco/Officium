@@ -76,7 +76,10 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_user_cad" value="#{app['label.usuario']}" />
-                                        <h:inputText label="#{app['label.usuario']}" required="true" class="form-control" id="ipt_user_cad" value="#{cadastroUsuarioBean.usuario.username}" />
+                                        <h:inputText label="#{app['label.usuario']}" required="true" class="form-control" id="ipt_user_cad" value="#{cadastroUsuarioBean.usuario.username}" >
+                                            <f:ajax event="blur" listener="#{cadastroUsuarioBean.verficarUsername}" execute="msg_user_cad" render="ipt_user_cad msg_user_cad_inex"/>
+                                        </h:inputText>
+                                        <h:outputText id="msg_user_cad_inex" style="color: red" value="#{cadastroUsuarioBean.msgUsuarioNaoExiste}"/>
                                         <h:message for="ipt_user_cad" style="color: red"/>
                                     </div>                                    
                                 </div>
@@ -97,7 +100,7 @@
                                     </div>                                    
                                 </div>
                             </div>
-                            <h:messages globalOnly="true" />
+                            <h:messages id="msg_global" globalOnly="true" />
                             <h:inputHidden id="ipt_sucesso" value="#{cadastroUsuarioBean.sucesso_salvar}"/>
                             <div class="row">
                                 <div class="col-lg-4 col-lg-offset-6">

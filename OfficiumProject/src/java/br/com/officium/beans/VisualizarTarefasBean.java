@@ -32,23 +32,35 @@ public class VisualizarTarefasBean implements Serializable {
     private Long idStatus;
     private TarefaDao tarefaDao;
     private StatusTarefa statusTarefa;
+    private Tarefa tarefa;
 
     @PostConstruct
     public void ini() {
+        iniciarTarefa();
         statusTarefa = new StatusTarefa();
         listTarefas = new ArrayList<>();
+    }
+    
+    private void iniciarTarefa(){
+        tarefa = new Tarefa();
+        tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
+    }
 
+    public void carregarTarefasDelegadas() {
+        this.tarefa.setUsuario(null);
+        this.tarefa.setUsuarioDelegado(new Usuario(getUsuarioLogado().getId()));
+        carregarTarefas();
+    }
+
+    public void carregarTarefas(Long idstatus) {
+        tarefa.setStatusTarefa(new StatusTarefa(idstatus));
+        this.carregarTarefas();
     }
 
     public void carregarTarefas() {
-        Tarefa tarefa = new Tarefa();
-
-        tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
-        statusTarefa.setId(this.idStatus);
-        //tarefa.setStatusTarefa(statusTarefa);
         try {
             listTarefas = getTarefaDao().consultar(0, 0, tarefa);
-//            FacesContext.getCurrentInstance().getPartialViewContext().getRenderIds().;
+            iniciarTarefa();
         } catch (Exception ex) {
             Logger.getLogger(VisualizarTarefasBean.class.getName()).log(Level.SEVERE, null, ex);
         }

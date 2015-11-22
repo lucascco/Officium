@@ -48,9 +48,7 @@ and open the template in the editor.
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_criacao_cad_tarefa" value="#{app['label.criacao']}"/>
-                                    <h:inputText disabled="true" label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.inicio}">
-                                        <f:convertDateTime pattern="dd/mm/yyyy" locale="pt_BR" timeZone="GMT-3"/>
-                                    </h:inputText>
+                                    <h:inputText disabled="true" label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_cad_tarefa" value="#{cadastroTarefaBean.dataCriacaoStr}"/>
                                     <h:message for="ipt_criacao_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
@@ -66,15 +64,13 @@ and open the template in the editor.
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Delegar para:</label>
-                                <div class="input-group" style="width: 100% !important;">
-                                    <div class="form-group">
-                                        <input class="form-control" type="text" placeholder="Usuário para ser delegado " />
-                                    </div>
-                                    <span class="input-group-btn">
-                                        <button type="button" class="btn btn-default" style="width: 100% !important;"><span class="glyphicon glyphicon-user"></span></button>
-                                    </span>
-                                </div>
+                                <h:outputLabel for="ipt_delegar_tarefa" value="Delegar para:"/>
+                                <h:inputText id="ipt_delegar_tarefa" class="form-control" value="#{cadastroTarefaBean.tarefa.usuarioDelegado.username}">
+                                    <f:ajax event="blur" listener="#{cadastroTarefaBean.verficarUsernameDelegado}" execute="ipt_delegar_tarefa" render="ipt_delegar_tarefa"/>
+                                </h:inputText>
+<!--                                <h:commandButton id="btn_verficar_user_name" actionListener="{cadastroTarefaBean.verficarUsernameDelegado()}" style="display: none">
+                                    <f:ajax render="ipt_delegar_tarefa"/>
+                                </h:commandButton>-->
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
