@@ -5,9 +5,12 @@
  */
 package br.com.officium.dominio;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,6 +18,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -22,24 +28,37 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "mensagens", schema = PojoBase.DB)
-public class Mensagem implements PojoBase{
-    
+public class Mensagem implements PojoBase {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String conteudo;
     private Boolean lida;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "criacao")
+    private Date criacao;
     @ManyToOne
-    @JoinColumn(name = "tipo_mensagem_id", nullable = false)
-    private TipoMensagem tipoMensagem;
+    @JoinColumn(name = "id_usuario_destino", nullable = false)
+    private Usuario usuarioDestino;
+    @ManyToOne
+    @JoinColumn(name = "id_usuario_origem", nullable = false)
+    private Usuario usuarioOrigem;
+
+    @Transient
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     public Mensagem(Long id) {
         this.id = id;
     }
 
     public Mensagem() {
+    }
+
+    public String getDateCriacaoFormat() {
+        return (simpleDateFormat.format(this.criacao));
     }
 
     @Override
@@ -59,7 +78,7 @@ public class Mensagem implements PojoBase{
         } catch (CloneNotSupportedException ex) {
             Logger.getLogger(Mensagem.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return null;
     }
 
@@ -77,14 +96,6 @@ public class Mensagem implements PojoBase{
 
     public void setLida(Boolean lida) {
         this.lida = lida;
-    }
-
-    public TipoMensagem getTipoMensagem() {
-        return tipoMensagem;
-    }
-
-    public void setTipoMensagem(TipoMensagem tipoMensagem) {
-        this.tipoMensagem = tipoMensagem;
     }
 
     @Override
@@ -108,5 +119,29 @@ public class Mensagem implements PojoBase{
         }
         return true;
     }
-    
+
+    public Usuario getUsuarioDestino() {
+        return usuarioDestino;
+    }
+
+    public void setUsuarioDestino(Usuario usuarioDestino) {
+        this.usuarioDestino = usuarioDestino;
+    }
+
+    public Usuario getUsuarioOrigem() {
+        return usuarioOrigem;
+    }
+
+    public void setUsuarioOrigem(Usuario usuarioOrigem) {
+        this.usuarioOrigem = usuarioOrigem;
+    }
+
+    public Date getCriacao() {
+        return criacao;
+    }
+
+    public void setCriacao(Date criacao) {
+        this.criacao = criacao;
+    }
+
 }

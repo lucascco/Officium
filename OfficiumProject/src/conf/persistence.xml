@@ -6,7 +6,6 @@
     <class>br.com.officium.dominio.PontuacaoUsuarioTarefa</class>
     <class>br.com.officium.dominio.StatusTarefa</class>
     <class>br.com.officium.dominio.Tarefa</class>
-    <class>br.com.officium.dominio.TipoMensagem</class>
     <class>br.com.officium.dominio.Usuario</class>
     <class>br.com.officium.dominio.Autorizacao</class>
     <class>br.com.officium.dominio.AutorizacaoUsuario</class>

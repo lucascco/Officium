@@ -5,10 +5,13 @@
  */
 package br.com.officium.beans;
 
+import br.com.officium.dao.MensagemDao;
 import br.com.officium.dao.TarefaDao;
 import br.com.officium.dao.UsuarioDao;
+import br.com.officium.dao.impl.MensagemDaoImpl;
 import br.com.officium.dao.impl.TarefaDaoImpl;
 import br.com.officium.dao.impl.UsuarioDaoImpl;
+import br.com.officium.dominio.Mensagem;
 import br.com.officium.dominio.StatusTarefa;
 import br.com.officium.dominio.Tarefa;
 import br.com.officium.dominio.Usuario;
@@ -34,6 +37,7 @@ import javax.faces.event.AjaxBehaviorEvent;
 @SessionScoped
 public class CadastroTarefaBean implements Serializable {
 
+    private MensagemDao mensagemDao;
     private Tarefa tarefa;
     private TarefaDao tarefaDao;
     private UsuarioDao usuarioDao;
@@ -49,6 +53,7 @@ public class CadastroTarefaBean implements Serializable {
         setTarefa(new Tarefa());
         getTarefa().setUsuarioDelegado(new Usuario());
         tarefa.setInicio(new Date());
+        tarefa.setImportancia(Short.parseShort("1"));
         dataCriacaoStr = simpleDateFormat.format(tarefa.getInicio());
     }
 
@@ -77,17 +82,33 @@ public class CadastroTarefaBean implements Serializable {
                 && tarefa.getImportancia() != null);
     }
 
+    public Mensagem salvarMensagem(String conteudo, Long idUsuarioDestino, Long idUsuarioOrigem) {
+        Mensagem mensagem = new Mensagem();
+        mensagem.setUsuarioOrigem(new Usuario(idUsuarioOrigem));
+        mensagem.setUsuarioDestino(new Usuario(idUsuarioDestino));
+        mensagem.setConteudo(conteudo);
+        mensagem.setCriacao(new Date());
+        mensagem.setLida(false);
+        return mensagem;
+    }
+
     public void salvar() {
         if (validarSalvar()) {
             try {
                 if (tarefa.getUsuarioDelegado() != null && tarefa.getUsuarioDelegado().getId() == null) {
                     tarefa.setUsuarioDelegado(null);
+                } else if (tarefa.getUsuarioDelegado() != null && tarefa.getUsuarioDelegado().getId() != null) {
+                    Mensagem mensagem = salvarMensagem("Foi delegado uma tarefa para você, verifique no menu Tarefas - Delegadas.",
+                            tarefa.getUsuarioDelegado().getId(),
+                            getUsuarioLogado().getId());
+                    
+                    getMensagemDao().salvar(mensagem);
                 }
                 tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
                 tarefa.setStatusTarefa(new StatusTarefa(3l));
                 this.getTarefaDao().salvar(tarefa);
                 FacesMessage message = new FacesMessage("Tarefa salva com sucesso!");
-                FacesContext.getCurrentInstance().addMessage("msg_cadastro_tarefa", message);
+                FacesContext.getCurrentInstance().addMessage(null, message);
                 init();
             } catch (Exception ex) {
                 FacesMessage message = new FacesMessage("Erro, tarefa não salva");
@@ -136,6 +157,13 @@ public class CadastroTarefaBean implements Serializable {
 
     public void setDataCriacaoStr(String dataCriacaoStr) {
         this.dataCriacaoStr = dataCriacaoStr;
+    }
+
+    public MensagemDao getMensagemDao() {
+        if (mensagemDao == null) {
+            mensagemDao = new MensagemDaoImpl();
+        }
+        return mensagemDao;
     }
 
 }

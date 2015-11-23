@@ -28,7 +28,7 @@
                     $('#btn_tarefas_atrasada').click();
                 } else if (idStatus == 0) {
                     $('#btn_tarefas_todas').click();
-                }else if(idStatus == -1){
+                } else if (idStatus == -1) {
                     $('#btn_tarefas_delegadas').click();
                 }
             }
@@ -61,7 +61,7 @@
                             </li>
                             <li><a href="#cadastrar_tarefas" data-toggle="tab" aria-controls="cadastrar_tarefas">Criar nova tarefa</a></li>
                             <li><a href="#relatorio_tarefas" data-toggle="tab" aria-controls="relatorio_tarefas">Relatórios</a></li>
-                            <li><a href="#">Mensagens <span class="badge">2</span></a></li>
+                            <li><a href="#mensagem_tarefas" data-toggle="tab" aria-controls="mensagem_tarefas">Mensagens</a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
@@ -79,7 +79,7 @@
                                 </ul>
                             </li>
                         </ul>
-                        <div class="navbar-form navbar-right" role="search">
+<!--                        <div class="navbar-form navbar-right" role="search">
                             <div class="input-group">
                                 <div class="form-group">
                                     <input type="text" class="form-control" placeholder="Pesquisar Tarefa"/>
@@ -88,7 +88,7 @@
                                     <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-search"></span></button>
                                 </span>
                             </div>
-                        </div>
+                        </div>-->
                     </div>
                 </div>
             </nav>
@@ -121,7 +121,10 @@
                 <ui:include id="include_cadastrar_tarefas" src="componentes/cadastroTarefa.xhtml"/>
             </div>
             <div role="tabpanel" class="tab-pane" id="relatorio_tarefas">
-                <ui:include id="include_cadastrar_tarefas" src="componentes/relatorioTarefa.xhtml"/>
+                <ui:include id="include_relatorio_tarefas" src="componentes/relatorioTarefa.xhtml"/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="mensagem_tarefas">
+                <ui:include id="include_mensagem_tarefas" src="componentes/mensagemTarefa.xhtml"/>
             </div>
         </div>
     </h:body>

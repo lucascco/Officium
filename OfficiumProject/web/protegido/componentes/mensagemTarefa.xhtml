@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <ui:composition>
+        <div class="panel panel-default" style="height: 100%;">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Mensagens
+                </h3>
+            </div>
+        </div>
+        <div class="panel-body">
+            <h:form id="form_mensagemTarefa" class="form-inline" prependId="false">
+                <div class="row">
+                    <div class="col-md-8" style="text-align: right">
+                        <h:commandButton class="form-control btn-success" value="Atualizar Mensagens" actionListener="#{mensagemBean.consultar()}">
+                            <f:ajax render="table_msg"/>
+                        </h:commandButton>
+                    </div>
+                </div>
+                <div class="row">
+                    <h:panelGroup id="table_msg" layout="block">
+                        <div class="col-md-12">
+                            <div class="table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Usuário Origem</th>
+                                            <th>Usuário Destino</th>
+                                            <th>Mensagem</th>
+                                            <th>Data Envio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach items="#{mensagemBean.listMensagens}" var="obj" varStatus="theCount">
+                                            <tr>
+                                                <td>
+                                                    #{obj.usuarioOrigem.nome}
+                                                </td>
+                                                <td>
+                                                    #{obj.usuarioDestino.nome}
+                                                </td>
+                                                <td>
+                                                    #{obj.conteudo}
+                                                </td>
+                                                <td>
+                                                    #{obj.dateCriacaoFormat}
+                                                </td>
+                                            </tr>
+                                        </c:forEach>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                </div>
+            </h:form>
+        </div>
+    </ui:composition>
+</html>
