@@ -38,8 +38,10 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <h:outputLabel for="ipt_nome_cad_tarefa" value="#{app['label.tarefa']} " />
-                                    <h:inputText label="#{app['label.tarefa']}" maxlength="30" required="true" class="form-control" id="ipt_nome_cad_tarefa" value="#{cadastroTarefaBean.tarefa.nome}"/>
+                                    <h:outputLabel for="ipt_nome_cad_tarefa" value="#{app['label.tarefa']} " /><span style="color: red">*</span>
+                                    <h:inputText label="#{app['label.tarefa']}" maxlength="30" required="true" class="form-control" id="ipt_nome_cad_tarefa" value="#{cadastroTarefaBean.tarefa.nome}">
+                                        <f:ajax/>
+                                    </h:inputText>
                                     <h:message for="ipt_nome_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
@@ -47,16 +49,17 @@ and open the template in the editor.
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <h:outputLabel for="ipt_criacao_cad_tarefa" value="#{app['label.criacao']}"/>
+                                    <h:outputLabel for="ipt_criacao_cad_tarefa" value="#{app['label.criacao']}"/><span style="color: red">*</span>
                                     <h:inputText disabled="true" label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_cad_tarefa" value="#{cadastroTarefaBean.dataCriacaoStr}"/>
                                     <h:message for="ipt_criacao_cad_tarefa" style="color:red" />
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <h:outputLabel for="ipt_duracao_cad_tarefa" value="#{app['label.finalizacao']}"/>
-                                    <h:inputText label="#{app['label.finalizacao']}" class="form-control" id="ipt_duracao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.duracao}">
+                                    <h:outputLabel for="ipt_duracao_cad_tarefa" value="#{app['label.finalizacao']}"/><span style="color: red">*</span>
+                                    <h:inputText label="#{app['label.finalizacao']}" required="true" class="form-control" id="ipt_duracao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.duracao}">
                                         <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                        <f:ajax/>
                                     </h:inputText>
                                     <h:message for="ipt_duracao_cad_tarefa" style="color:red"/>
                                 </div>
@@ -74,7 +77,7 @@ and open the template in the editor.
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <h:outputLabel for="ipt_importancia_cad_tarefa" value="#{app['label.importancia']}" />
+                                    <h:outputLabel for="ipt_importancia_cad_tarefa" value="#{app['label.importancia']}" /><span style="color: red">*</span>
                                     <h:selectOneMenu label="#{app['label.importancia']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.importancia}">
                                         <f:selectItem id="importancia_1" itemLabel="Grau de Importancia 1" itemValue="1" />
                                         <f:selectItem id="importancia_2" itemLabel="Grau de Importancia 2" itemValue="2" />
@@ -86,6 +89,7 @@ and open the template in the editor.
                                         <f:selectItem id="importancia_8" itemLabel="Grau de Importancia 8" itemValue="8" />
                                         <f:selectItem id="importancia_9" itemLabel="Grau de Importancia 9" itemValue="9" />
                                         <f:selectItem id="importancia_10" itemLabel="Grau de Importancia 10" itemValue="10" />
+                                        <f:ajax/>
                                     </h:selectOneMenu>
                                     <h:message for="ipt_importancia_cad_tarefa" style="color: red"/>
                                 </div>
@@ -94,9 +98,10 @@ and open the template in the editor.
                         <div class="row">
                             <div class="col-md-8">
                                 <div class="form-group">
-                                    <h:outputLabel for="ipt_descricao_cad_tarefa" value="#{app['label.descricao']}" />
+                                    <h:outputLabel for="ipt_descricao_cad_tarefa" value="#{app['label.descricao']}" /><span style="color: red">*</span>
                                     <h:inputTextarea label="#{app['label.descricao']}" class="form-control" id="ipt_descricao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.descricao}">
                                         <f:validateLength maximum="240"/>
+                                        <f:ajax/>
                                     </h:inputTextarea>
                                     <h:message for="ipt_descricao_cad_tarefa" style="color: red"/>
                                 </div>
@@ -104,7 +109,10 @@ and open the template in the editor.
                         </div>                            
                         <div class="row">
                             <div class="col-md-8" style="text-align: right">
-                                <h:commandButton type="submit" class="form-control btn-success" value="#{app['bttn.cadastrar']}" actionListener="#{cadastroTarefaBean.salvar()}"/>
+                                <h:commandButton class="form-control btn-success" value="#{app['bttn.cadastrar']}" actionListener="#{cadastroTarefaBean.salvar()}">
+                                    <f:ajax render="form_cadastroTarefa"/>
+                                </h:commandButton>
+                                <h:outputScript>atribuirMascaraDataHora('#ipt_duracao_relat_tarefa');</h:outputScript>
                             </div>
                         </div>
                     </div>

@@ -6,4 +6,6 @@
 
 $(document).ready(function(){
     atribuirMascaraDataHora('#ipt_duracao_cad_tarefa');
+    atribuirMascaraDataHora('#ipt_criacao_relat_tarefa');
+    atribuirMascaraDataHora('#ipt_duracao_relat_tarefa');
 });

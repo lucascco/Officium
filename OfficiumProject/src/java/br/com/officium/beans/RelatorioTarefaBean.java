@@ -30,14 +30,15 @@ import javax.faces.event.AjaxBehaviorEvent;
  *
  * @author marlo
  */
-@ManagedBean(name = "cadastroTarefaBean")
+@ManagedBean(name = "relatorioTarefaBean")
 @SessionScoped
-public class CadastroTarefaBean implements Serializable {
+public class RelatorioTarefaBean implements Serializable {
 
     private Tarefa tarefa;
     private TarefaDao tarefaDao;
     private UsuarioDao usuarioDao;
     private String dataCriacaoStr;
+    private List<Tarefa> listTarefas;
     private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     @PostConstruct
@@ -65,40 +66,17 @@ public class CadastroTarefaBean implements Serializable {
                     tarefa.getUsuarioDelegado().setId(usuarios.get(0).getId());
                 }
             } catch (Exception ex) {
-                Logger.getLogger(CadastroTarefaBean.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RelatorioTarefaBean.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public boolean validarSalvar() {
-        return (tarefa.getNome() != null && !tarefa.getNome().isEmpty()
-                && tarefa.getDescricao() != null && !tarefa.getDescricao().isEmpty()
-                && tarefa.getDuracao() != null
-                && tarefa.getImportancia() != null);
-    }
-
-    public void salvar() {
-        if (validarSalvar()) {
-            try {
-                if (tarefa.getUsuarioDelegado() != null && tarefa.getUsuarioDelegado().getId() == null) {
-                    tarefa.setUsuarioDelegado(null);
-                }
-                tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
-                tarefa.setStatusTarefa(new StatusTarefa(3l));
-                this.getTarefaDao().salvar(tarefa);
-                FacesMessage message = new FacesMessage("Tarefa salva com sucesso!");
-                FacesContext.getCurrentInstance().addMessage("msg_cadastro_tarefa", message);
-                init();
-            } catch (Exception ex) {
-                FacesMessage message = new FacesMessage("Erro, tarefa não salva");
-                FacesContext.getCurrentInstance().addMessage(null, message);
-                Logger.getLogger(CadastroTarefaBean.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        } else {
-            FacesMessage message = new FacesMessage("Erro, preencha os campos obrigatórios!");
-            FacesContext.getCurrentInstance().addMessage(null, message);
+    public void consultar(){
+        try {
+            listTarefas = getTarefaDao().consultar(0, 0, tarefa);
+        } catch (Exception ex) {
+            Logger.getLogger(RelatorioTarefaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
-        init();
     }
 
     public Usuario getUsuarioLogado() {
@@ -136,6 +114,14 @@ public class CadastroTarefaBean implements Serializable {
 
     public void setDataCriacaoStr(String dataCriacaoStr) {
         this.dataCriacaoStr = dataCriacaoStr;
+    }
+
+    public List<Tarefa> getListTarefas() {
+        return listTarefas;
+    }
+
+    public void setListTarefas(List<Tarefa> listTarefas) {
+        this.listTarefas = listTarefas;
     }
 
 }

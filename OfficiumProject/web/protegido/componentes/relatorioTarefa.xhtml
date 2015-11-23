@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"> 
+
+    <ui:composition>
+        <style type="text/css">
+            .row{
+                margin-bottom: 1em;
+            }
+            .form-control{
+                width: 100% !important;
+            }
+        </style>
+        <div class="panel panel-default" style="height: 100%;">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    Relatório de Tarefas
+                </h3>
+            </div>
+            <div class="panel-body">
+                <h:form id="form_relatorioTarefa" class="form-inline" prependId="false">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h:outputLabel for="ipt_codigo_relat_tarefa" value="#{app['label.codigo']}" />
+                                    <h:inputText label="#{app['label.codigo']}" class="form-control" id="ipt_codigo_relat_tarefa" value="#{relatorioTarefaBean.tarefa.id}">
+                                        <f:ajax/>
+                                    </h:inputText>
+                                    <h:message for="ipt_codigo_relat_tarefa" style="color:red" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h:outputLabel for="ipt_nome_relat_tarefa" value="#{app['label.tarefa']} " />
+                                    <h:inputText label="#{app['label.tarefa']}" maxlength="30" required="true" class="form-control" id="ipt_nome_relat_tarefa" value="#{relatorioTarefaBean.tarefa.nome}">
+                                        <f:ajax/>
+                                    </h:inputText>
+                                    <h:message for="ipt_nome_relat_tarefa" style="color:red" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h:outputLabel for="ipt_criacao_relat_tarefa" value="#{app['label.criacao']}"/>
+                                    <h:inputText label="#{app['label.criacao']}" class="form-control" id="ipt_criacao_relat_tarefa" value="#{relatorioTarefaBean.tarefa.inicio}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                        <f:ajax/>
+                                    </h:inputText>
+                                    <h:message for="ipt_criacao_relat_tarefa" style="color:red" />
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h:outputLabel for="ipt_duracao_relat_tarefa" value="#{app['label.finalizacao']}"/>
+                                    <h:inputText label="#{app['label.finalizacao']}" class="form-control" id="ipt_duracao_relat_tarefa" value="#{relatorioTarefaBean.tarefa.duracao}">
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
+                                        <f:ajax/>
+                                    </h:inputText>
+                                    <h:message for="ipt_duracao_relat_tarefa" style="color:red"/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h:outputLabel for="ipt_delegar_relat_tarefa" value="Delegação"/>
+                                <h:inputText id="ipt_delegar_relat_tarefa" class="form-control" value="#{relatorioTarefaBean.tarefa.usuarioDelegado.username}">
+                                    <f:ajax event="blur" listener="#{relatorioTarefaBean.verficarUsernameDelegado}" execute="ipt_delegar_relat_tarefa" render="ipt_delegar_relat_tarefa"/>
+                                </h:inputText>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <h:outputLabel for="ipt_importancia_relat_tarefa" value="#{app['label.importancia']}" />
+                                    <h:selectOneMenu label="#{app['label.importancia']}" class="form-control" id="ipt_importancia_relat_tarefa" value="#{relatorioTarefaBean.tarefa.importancia}">
+                                        <f:selectItem itemLabel="Grau de Importancia 1" itemValue="1" />
+                                        <f:selectItem itemLabel="Grau de Importancia 2" itemValue="2" />
+                                        <f:selectItem itemLabel="Grau de Importancia 3" itemValue="3" />
+                                        <f:selectItem itemLabel="Grau de Importancia 4" itemValue="4" />
+                                        <f:selectItem itemLabel="Grau de Importancia 5" itemValue="5" />
+                                        <f:selectItem itemLabel="Grau de Importancia 6" itemValue="6" />
+                                        <f:selectItem itemLabel="Grau de Importancia 7" itemValue="7" />
+                                        <f:selectItem itemLabel="Grau de Importancia 8" itemValue="8" />
+                                        <f:selectItem itemLabel="Grau de Importancia 9" itemValue="9" />
+                                        <f:selectItem itemLabel="Grau de Importancia 10" itemValue="10" />
+                                        <f:ajax/>
+                                    </h:selectOneMenu>
+                                    <h:message for="ipt_importancia_relat_tarefa" style="color: red"/>
+                                </div>
+                            </div>
+                        </div>                          
+                        <div class="row">
+                            <div class="col-md-8" style="text-align: right">
+                                <h:commandButton class="form-control btn-success" value="#{app['bttn.consultar']}" actionListener="#{relatorioTarefaBean.consultar()}">
+                                    <f:ajax render="table_relat"/>
+                                </h:commandButton>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h:panelGroup id="table_relat" layout="block">
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Código</th>
+                                                    <th>Tarefa</th>
+                                                    <th>Criação</th>
+                                                    <th>Finalização</th>
+                                                    <th>Terminado em</th>
+                                                    <th>Ações</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <c:forEach items="#{relatorioTarefaBean.listTarefas}" var="obj" varStatus="theCount">
+                                                    <tr>
+                                                        <td>
+                                                            #{obj.id}
+                                                        </td>
+                                                        <td>
+                                                            #{obj.nome}
+                                                        </td>
+                                                        <td>
+                                                            #{obj.dateCriacaoFormat}
+                                                        </td>
+                                                        <td>
+                                                            #{obj.dateDuracaoFormat}
+                                                        </td>
+                                                        <td>
+                                                            #{obj.dateTerminoFormat}
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn btn-default">Detalhes</button>
+                                                        </td>
+                                                    </tr>
+                                                </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </h:panelGroup>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </div>
+    </ui:composition>
+</html>
+

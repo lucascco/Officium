@@ -60,7 +60,7 @@
                                 </ul>
                             </li>
                             <li><a href="#cadastrar_tarefas" data-toggle="tab" aria-controls="cadastrar_tarefas">Criar nova tarefa</a></li>
-                            <li><a href="#">Relatórios</a></li>
+                            <li><a href="#relatorio_tarefas" data-toggle="tab" aria-controls="relatorio_tarefas">Relatórios</a></li>
                             <li><a href="#">Mensagens <span class="badge">2</span></a></li>
                         </ul>
                         <ul class="nav navbar-nav navbar-right">
@@ -117,28 +117,11 @@
                     <ui:param value="Concluídas" name="titulo"/>
                 </ui:include>
             </div>
-            <!--            <div role="tabpanel" class="tab-pane" id="tarefas_atrasadas">
-                            <ui:include id="include_tarefas_atrasadas" src="componentes/visualizarTarefas.xhtml">
-                                <ui:param value="Atrasadas" name="titulo"/>
-                            </ui:include>                
-                        </div>
-                        <div role="tabpanel" class="tab-pane active" id="tarefas_a_fazer">
-                            <ui:include id="include_tarefas_fazer" src="componentes/visualizarTarefas.xhtml">
-                                <ui:param value="A Fazer" name="titulo"/>
-                            </ui:include>                
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="tarefas_andamento">
-                            <ui:include id="include_tarefas_em_andamento" src="componentes/visualizarTarefas.xhtml">
-                                <ui:param value="Em Curso" name="titulo"/>
-                            </ui:include>                
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="tarefas_delegadas">
-                            <ui:include id="include_tarefas_delegadas" src="componentes/visualizarTarefas.xhtml">
-                                <ui:param value="Delegadas" name="titulo"/>
-                            </ui:include>                
-                        </div>-->
             <div role="tabpanel" class="tab-pane" id="cadastrar_tarefas">
                 <ui:include id="include_cadastrar_tarefas" src="componentes/cadastroTarefa.xhtml"/>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="relatorio_tarefas">
+                <ui:include id="include_cadastrar_tarefas" src="componentes/relatorioTarefa.xhtml"/>
             </div>
         </div>
     </h:body>
