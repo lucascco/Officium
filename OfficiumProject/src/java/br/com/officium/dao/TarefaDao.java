@@ -15,5 +15,6 @@ import java.util.List;
  *
  * @author Lucas Corrêa
  */
-public interface TarefaDao extends GenericDao<Tarefa>{    
+public interface TarefaDao extends GenericDao<Tarefa>{
+    public List<Tarefa> consultarVisualizarTarefa(int start, int maxResult, Tarefa obj, String campoOrd, Boolean asc) throws Exception;
 }

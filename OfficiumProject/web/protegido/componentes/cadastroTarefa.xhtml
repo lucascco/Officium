@@ -56,7 +56,7 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_duracao_cad_tarefa" value="#{app['label.finalizacao']}"/>
                                     <h:inputText label="#{app['label.finalizacao']}" class="form-control" id="ipt_duracao_cad_tarefa" value="#{cadastroTarefaBean.tarefa.duracao}">
-                                        <f:convertDateTime pattern="dd/MM/yyyy"/>
+                                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" />
                                     </h:inputText>
                                     <h:message for="ipt_duracao_cad_tarefa" style="color:red"/>
                                 </div>
@@ -76,10 +76,16 @@ and open the template in the editor.
                                 <div class="form-group">
                                     <h:outputLabel for="ipt_importancia_cad_tarefa" value="#{app['label.importancia']}" />
                                     <h:selectOneMenu label="#{app['label.importancia']}" class="form-control" id="ipt_importancia_cad_tarefa" value="#{cadastroTarefaBean.tarefa.importancia}">
-                                        <f:selectItem id="importancia_urgente" itemLabel="Urgente" itemValue="1" />
-                                        <f:selectItem id="importancia_normal" itemLabel="Normal" itemValue="2" />
-                                        <f:selectItem id="importancia_baixa" itemLabel="Baixa" itemValue="3" />
-
+                                        <f:selectItem id="importancia_1" itemLabel="Grau de Importancia 1" itemValue="1" />
+                                        <f:selectItem id="importancia_2" itemLabel="Grau de Importancia 2" itemValue="2" />
+                                        <f:selectItem id="importancia_3" itemLabel="Grau de Importancia 3" itemValue="3" />
+                                        <f:selectItem id="importancia_4" itemLabel="Grau de Importancia 4" itemValue="4" />
+                                        <f:selectItem id="importancia_5" itemLabel="Grau de Importancia 5" itemValue="5" />
+                                        <f:selectItem id="importancia_6" itemLabel="Grau de Importancia 6" itemValue="6" />
+                                        <f:selectItem id="importancia_7" itemLabel="Grau de Importancia 7" itemValue="7" />
+                                        <f:selectItem id="importancia_8" itemLabel="Grau de Importancia 8" itemValue="8" />
+                                        <f:selectItem id="importancia_9" itemLabel="Grau de Importancia 9" itemValue="9" />
+                                        <f:selectItem id="importancia_10" itemLabel="Grau de Importancia 10" itemValue="10" />
                                     </h:selectOneMenu>
                                     <h:message for="ipt_importancia_cad_tarefa" style="color: red"/>
                                 </div>

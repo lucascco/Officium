@@ -24,9 +24,31 @@ and open the template in the editor.
         <h:form id="form_tarefas">
             <div class="panel panel-default" style="height: 100%;">
                 <div class="panel-heading">
-                    <h3 class="panel-title">
-                        Tarefas - #{visualizarTarefasBean.tituloStatus}
-                    </h3>
+                    <div class="row">
+                        <div class="col-md-2">
+                            <h3 class="panel-title">
+                                Tarefas - #{visualizarTarefasBean.tituloStatus}
+                            </h3>
+                        </div>
+                        <div class="col-md-1">
+                            <label for="select_ord">Ordenar: </label>
+                        </div>
+                        <div class="col-md-3">
+                            <h:selectOneMenu styleClass="form-control" id="select_ord" value="#{visualizarTarefasBean.labelOrd}">
+                                <f:selectItem itemLabel="Por Importancia" itemValue="importancia"/>
+                                <f:selectItem itemLabel="Por Criação" itemValue="inicio"/>
+                                <f:selectItem itemLabel="Por Prazo Maximo" itemValue="duracao"/>
+                                <f:selectItem itemLabel="Por Termino" itemValue="dataTermino"/>
+                                <f:ajax render="form_tarefas" listener="#{visualizarTarefasBean.recarregarTarefas()}" />
+                            </h:selectOneMenu>
+                        </div>
+                        <div class="col-md-1">
+                            <h:outputLabel for="select_asc" value="Asc: "/>
+                            <h:selectBooleanCheckbox  styleClass="checkbox-inline" value="#{visualizarTarefasBean.ordAsc}" id="select_asc">
+                                <f:ajax />
+                            </h:selectBooleanCheckbox>
+                        </div>
+                    </div>
                 </div>
                 <div class="panel-body">
                     <h:panelGroup layout="block">
@@ -34,11 +56,11 @@ and open the template in the editor.
                             <div class="jumbotron box-tarefa status-#{obj.statusTarefa.id}" onclick="abrirModal(#{obj.id})">
                                 <div class="container-fluid">
                                     <div class="row" style="height: 6em;">
-                                        <div class="col-md-8">
-                                            <h3>#{obj.nome}</h3>
+                                        <div class="col-md-10">
+                                            <h3>#{obj.nome} - Import: #{obj.importancia}</h3>
                                         </div>
-                                        <div class="col-md-4" style="text-align: right; height: 56px;">
-                                            <h6>Código: #{obj.id}</h6>
+                                        <div class="col-md-2" style="text-align: right; height: 56px;">
+                                            <h6>Cód.: #{obj.id}</h6>
                                         </div>
                                     </div>
                                     <div class="row" style="height: 5.5em; word-wrap: break-word; overflow-y: auto">
@@ -93,6 +115,13 @@ and open the template in the editor.
                                                         <span class="label_modal">Termina em:</span> #{obj.dateDuracaoFormat}
                                                     </div>
                                                 </div>
+                                                <h:panelGroup rendered="#{visualizarTarefasBean.renderTerminadaEm(obj.statusTarefa.id)}" layout="block">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span class="label_modal">Foi terminada em:</span> #{obj.dateTerminoFormat}
+                                                        </div>
+                                                    </div>
+                                                </h:panelGroup>
                                                 <p id="msg_modal"></p>
                                             </div>
                                             <div class="modal-footer">

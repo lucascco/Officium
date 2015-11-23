@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -43,6 +44,9 @@ public class Tarefa implements PojoBase {
     private Date duracao;
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_termino")
+    private Date dataTermino;
     private String descricao;
     @ManyToOne
     @JoinColumn(nullable = false)
@@ -55,7 +59,7 @@ public class Tarefa implements PojoBase {
     private StatusTarefa statusTarefa;
     
     @Transient
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss"); 
 
     public Tarefa() {
     }
@@ -68,6 +72,13 @@ public class Tarefa implements PojoBase {
         long tempoTotal = getDuracao().getTime() - getInicio().getTime();
         long tempoDecorrido = new Date().getTime() - getInicio().getTime();
         return((tempoDecorrido*100l)/tempoTotal);
+    }
+    
+    public String getDateTerminoFormat(){
+        if(dataTermino == null){
+            return "";
+        }
+        return(simpleDateFormat.format(this.dataTermino));
     }
     
     public String getDateCriacaoFormat(){
@@ -183,6 +194,14 @@ public class Tarefa implements PojoBase {
 
     public void setStatusTarefa(StatusTarefa statusTarefa) {
         this.statusTarefa = statusTarefa;
+    }
+
+    public Date getDataTermino() {
+        return dataTermino;
+    }
+
+    public void setDataTermino(Date dataTermino) {
+        this.dataTermino = dataTermino;
     }
     
     

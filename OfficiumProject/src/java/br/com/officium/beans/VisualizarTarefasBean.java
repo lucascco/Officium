@@ -14,6 +14,7 @@ import br.com.officium.dominio.Tarefa;
 import br.com.officium.dominio.Usuario;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,12 +38,16 @@ public class VisualizarTarefasBean implements Serializable {
     private StatusTarefa statusTarefa;
     private Tarefa tarefa;
     private String tituloStatus;
+    private String labelOrd;
+    private Boolean ordAsc;
 
     @PostConstruct
     public void ini() {
         iniciarTarefa();
         statusTarefa = new StatusTarefa();
         listTarefas = new ArrayList<>();
+        labelOrd = "importancia";
+        ordAsc = false;
     }
 
     private void iniciarTarefa() {
@@ -56,6 +61,10 @@ public class VisualizarTarefasBean implements Serializable {
         carregarTarefas("Delegadas");
     }
 
+    public boolean renderTerminadaEm(Long idst) {
+        return idst == 1;
+    }
+    
     public boolean DesabilitaBotaoAFazer(Long idst) {
         return idst == 2 || idst == 1;
     }
@@ -65,6 +74,9 @@ public class VisualizarTarefasBean implements Serializable {
     }
 
     public void alterarStatusTarefa(Tarefa t, Long idSt) {
+        if(idSt==1){
+            t.setDataTermino(new Date());
+        }
         t.setStatusTarefa(new StatusTarefa(idSt));
         try {
             StatusTarefa st_aux = getStatusTarefaDao().consultarPorId(idSt);
@@ -88,7 +100,7 @@ public class VisualizarTarefasBean implements Serializable {
     public void carregarTarefas(String titulo) {
         tituloStatus = titulo;
         try {
-            listTarefas = getTarefaDao().consultar(0, 0, tarefa);
+            listTarefas = getTarefaDao().consultarVisualizarTarefa(0, 0, tarefa, labelOrd, ordAsc);
             iniciarTarefa();
         } catch (Exception ex) {
             Logger.getLogger(VisualizarTarefasBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -147,5 +159,21 @@ public class VisualizarTarefasBean implements Serializable {
 
     public void setTituloStatus(String tituloStatus) {
         this.tituloStatus = tituloStatus;
+    }
+
+    public String getLabelOrd() {
+        return labelOrd;
+    }
+
+    public void setLabelOrd(String labelOrd) {
+        this.labelOrd = labelOrd;
+    }
+
+    public Boolean getOrdAsc() {
+        return ordAsc;
+    }
+
+    public void setOrdAsc(Boolean ordAsc) {
+        this.ordAsc = ordAsc;
     }
 }

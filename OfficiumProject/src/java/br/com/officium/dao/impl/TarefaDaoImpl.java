@@ -63,11 +63,31 @@ public class TarefaDaoImpl extends GenericDaoImpl<Tarefa> implements TarefaDao {
     }
 
     @Override
+    public List<Tarefa> consultarVisualizarTarefa(int start, int maxResult, Tarefa obj, String campoOrd, Boolean asc) throws Exception {
+        CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
+        CriteriaQuery<Tarefa> criteriaQuery = criarCriteriaQuery();
+        List<Predicate> predicates = createPredicateFromObject(obj, builder);
+        criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
+        if(asc){
+            criteriaQuery.orderBy(builder.asc(getObjetoRoot().get(campoOrd)));
+        }else{
+            criteriaQuery.orderBy(builder.desc(getObjetoRoot().get(campoOrd)));
+        }
+        TypedQuery<Tarefa> query = this.getEntityManager().createQuery(criteriaQuery);
+        if (maxResult > 0 && start >= 0) {
+            query.setFirstResult(start);
+            query.setMaxResults(maxResult);
+        }
+        return query.getResultList();
+    }
+
+    @Override
     public List<Tarefa> consultar(int start, int maxResult, Tarefa obj) throws Exception {
         CriteriaBuilder builder = getEntityManager().getCriteriaBuilder();
         CriteriaQuery<Tarefa> criteriaQuery = criarCriteriaQuery();
         List<Predicate> predicates = createPredicateFromObject(obj, builder);
         criteriaQuery.where(predicates.toArray(new Predicate[predicates.size()]));
+        criteriaQuery.orderBy(builder.desc(getObjetoRoot().get("importancia")));
         TypedQuery<Tarefa> query = this.getEntityManager().createQuery(criteriaQuery);
         if (maxResult > 0 && start >= 0) {
             query.setFirstResult(start);

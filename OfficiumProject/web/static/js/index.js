@@ -5,6 +5,5 @@
  */
 
 $(document).ready(function(){
-    atribuirMascaraData('#ipt_criacao_cad_tarefa');
-    atribuirMascaraData('#ipt_duracao_cad_tarefa');
+    atribuirMascaraDataHora('#ipt_duracao_cad_tarefa');
 });

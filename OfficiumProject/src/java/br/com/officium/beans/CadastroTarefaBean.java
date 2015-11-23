@@ -38,7 +38,7 @@ public class CadastroTarefaBean implements Serializable {
     private TarefaDao tarefaDao;
     private UsuarioDao usuarioDao;
     private String dataCriacaoStr;
-    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 
     @PostConstruct
     public void init() {
@@ -78,10 +78,11 @@ public class CadastroTarefaBean implements Serializable {
             tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));
             tarefa.setStatusTarefa(new StatusTarefa(3l));
             this.getTarefaDao().salvar(tarefa);
-            init();
             FacesMessage message = new FacesMessage("Tarefa salva com sucesso!");
             FacesContext.getCurrentInstance().addMessage("msg_cadastro_tarefa", message);
+            init();
         } catch (Exception ex) {
+            init();
             FacesMessage message = new FacesMessage("Erro, tarefa não salva");
             FacesContext.getCurrentInstance().addMessage(null, message);
             Logger.getLogger(CadastroTarefaBean.class.getName()).log(Level.SEVERE, null, ex);

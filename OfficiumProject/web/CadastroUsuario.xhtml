@@ -88,14 +88,18 @@
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_senha_cad" value="#{app['label.senha']}" />
-                                        <h:inputSecret maxlength="6" label="Senha" required="true" class="form-control senha" id="ipt_senha_cad" value="#{cadastroUsuarioBean.senha1}" />
+                                        <h:inputSecret maxlength="6" label="Senha" required="true" class="form-control senha" id="ipt_senha_cad" value="#{cadastroUsuarioBean.senha1}" >
+                                            <f:validateLength minimum="6"/>
+                                        </h:inputSecret>
                                         <h:message for="ipt_senha_cad" style="color: red"/>
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="form-group">
                                         <h:outputLabel for="ipt_senha_2_cad" value="#{app['label.repetir.senha']}" />
-                                        <h:inputSecret maxlength="6" label="Repetir Senha" required="true" class="form-control senha" id="ipt_senha_2_cad" value="#{cadastroUsuarioBean.senha2}"/>
+                                        <h:inputSecret maxlength="6" label="Repetir Senha" required="true" class="form-control senha" id="ipt_senha_2_cad" value="#{cadastroUsuarioBean.senha2}">
+                                            <f:validateLength minimum="6"/>
+                                        </h:inputSecret>
                                         <h:message for="ipt_senha_2_cad" style="color: red"/>
                                     </div>                                    
                                 </div>
