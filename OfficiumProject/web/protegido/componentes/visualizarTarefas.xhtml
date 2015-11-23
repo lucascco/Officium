@@ -11,17 +11,27 @@ and open the template in the editor.
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">  
     <ui:composition>
+        <script type="text/javascript">
+            function abrirModal(idModal) {
+                $('#modal_' + idModal).modal('show');
+            }
+        </script>
+        <style type="text/css">
+            .label_modal{
+                font-weight: bold;
+            }
+        </style>
         <h:form id="form_tarefas">
             <div class="panel panel-default" style="height: 100%;">
                 <div class="panel-heading">
                     <h3 class="panel-title">
-                        Tarefas - #{titulo}
+                        Tarefas - #{visualizarTarefasBean.tituloStatus}
                     </h3>
                 </div>
                 <div class="panel-body">
                     <h:panelGroup layout="block">
                         <c:forEach items="#{visualizarTarefasBean.listTarefas}" var="obj" varStatus="theCount">
-                            <div class="jumbotron box-tarefa status-#{obj.statusTarefa.id}">
+                            <div class="jumbotron box-tarefa status-#{obj.statusTarefa.id}" onclick="abrirModal(#{obj.id})">
                                 <div class="container-fluid">
                                     <div class="row" style="height: 6em;">
                                         <div class="col-md-8">
@@ -31,7 +41,7 @@ and open the template in the editor.
                                             <h6>Código: #{obj.id}</h6>
                                         </div>
                                     </div>
-                                    <div class="row" style="height: 5.5em">
+                                    <div class="row" style="height: 5.5em; word-wrap: break-word; overflow-y: auto">
                                         <div class="col-md-12">
                                             <h5>#{obj.descricao}</h5>
                                         </div>
@@ -46,10 +56,75 @@ and open the template in the editor.
                                     </div>
                                 </div>
                             </div>
+                            <div id="modal_#{obj.id}" class="modal fade">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <h:panelGroup layout="block" id="informacoes_modal_#{obj.id}">
+                                            <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <h4 id="title_modal" class="modal-title">#{obj.nome}</h4>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        Esta tarefa esta #{obj.statusTarefa.descricao}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="row" style="word-wrap: break-word">
+                                                    <div class="col-md-12">
+                                                        #{obj.descricao}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <span class="label_modal">Origem:</span> #{obj.usuario.nome}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span class="label_modal">Usuario Delegado:</span> #{((obj.usuarioDelegado != null) ? obj.usuarioDelegado.nome : "Sem delegação")}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <span class="label_modal">Criada em:</span> #{obj.dateCriacaoFormat}
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <span class="label_modal">Termina em:</span> #{obj.dateDuracaoFormat}
+                                                    </div>
+                                                </div>
+                                                <p id="msg_modal"></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <div class="row">
+                                                    <div class="col-md-2">
+                                                        Código: #{obj.id}
+                                                    </div>
+                                                    <div class="col-md-10">
+                                                        <h:commandButton value="Começar a Fazer!" class="btn btn-info" disabled="#{visualizarTarefasBean.DesabilitaBotaoAFazer(obj.statusTarefa.id)}">
+                                                            <f:ajax event="click" render="informacoes_modal_#{obj.id}" listener="#{visualizarTarefasBean.alterarStatusTarefa(obj,2)}"/>
+                                                        </h:commandButton>
+                                                        <h:commandButton value="Já Terminei!" class="btn btn-success" disabled="#{visualizarTarefasBean.DesabilitaBotaoJaTerminei(obj.statusTarefa.id)}">
+                                                            <f:ajax event="click" render="informacoes_modal_#{obj.id}" listener="#{visualizarTarefasBean.alterarStatusTarefa(obj,1)}"/>
+                                                        </h:commandButton>
+                                                        <button type="button" class="btn btn-default" onclick="" data-dismiss="modal">Fechar</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </h:panelGroup>
+                                    </div><!-- /.modal-content -->
+                                </div><!-- /.modal-dialog -->
+                            </div><!-- /.modal -->
                         </c:forEach>
                     </h:panelGroup>
                 </div>
             </div>
+            <!--            <h:commandButton value="teste">
+                            <f:ajax event="click" listener="{visualizarTarefasBean.alterarStatusTarefa()}"/>
+                        </h:commandButton>-->
+            <!--            <h:commandButton value="Começar a Fazer!" class="btn btn-info" action="{visualizarTarefasBean.alterarStatusTarefa()}">
+                            <f:ajax event="click" render="form_tarefas"/>
+                        </h:commandButton>-->
         </h:form>
     </ui:composition>
 </ui>

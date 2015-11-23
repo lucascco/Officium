@@ -23,6 +23,7 @@ and open the template in the editor.
     padding-bottom: 20px !important;
     margin-left: 1em;
     float: left;
+    cursor: pointer
 }
 
 .status-1{

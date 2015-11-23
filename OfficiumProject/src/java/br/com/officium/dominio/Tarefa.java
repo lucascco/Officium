@@ -5,6 +5,7 @@
  */
 package br.com.officium.dominio;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -18,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -51,6 +53,9 @@ public class Tarefa implements PojoBase {
     @ManyToOne
     @JoinColumn(name="status_tarefa_id")
     private StatusTarefa statusTarefa;
+    
+    @Transient
+    private final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy"); 
 
     public Tarefa() {
     }
@@ -63,6 +68,14 @@ public class Tarefa implements PojoBase {
         long tempoTotal = getDuracao().getTime() - getInicio().getTime();
         long tempoDecorrido = new Date().getTime() - getInicio().getTime();
         return((tempoDecorrido*100l)/tempoTotal);
+    }
+    
+    public String getDateCriacaoFormat(){
+        return(simpleDateFormat.format(this.inicio));
+    }
+    
+    public String getDateDuracaoFormat(){
+        return(simpleDateFormat.format(this.duracao));
     }
     
     @Override

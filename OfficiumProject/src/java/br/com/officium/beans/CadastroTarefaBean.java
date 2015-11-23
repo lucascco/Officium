@@ -72,7 +72,7 @@ public class CadastroTarefaBean implements Serializable {
 
     public void salvar() {
         try {
-            if(tarefa.getUsuarioDelegado().getId() == null){
+            if(tarefa.getUsuarioDelegado() != null && tarefa.getUsuarioDelegado().getId() == null){
                 tarefa.setUsuarioDelegado(null);
             }
             tarefa.setUsuario(new Usuario(getUsuarioLogado().getId()));

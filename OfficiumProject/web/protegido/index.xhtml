@@ -92,19 +92,19 @@
                     </div>
                 </div>
             </nav>
-            <h:commandButton id="btn_tarefas_concluidas" actionListener="#{visualizarTarefasBean.carregarTarefas(1)}" style="display: none">
+            <h:commandButton id="btn_tarefas_concluidas" actionListener="#{visualizarTarefasBean.carregarTarefas(1, 'Concluídas')}" style="display: none">
                 <f:ajax render="form_tarefas"/>
             </h:commandButton>
-            <h:commandButton id="btn_tarefas_a_fazer" actionListener="#{visualizarTarefasBean.carregarTarefas(3)}" style="display: none">
+            <h:commandButton id="btn_tarefas_a_fazer" actionListener="#{visualizarTarefasBean.carregarTarefas(3, 'A Fazer')}" style="display: none">
                 <f:ajax render="form_tarefas"/>
             </h:commandButton>
-            <h:commandButton id="btn_tarefas_curso" actionListener="#{visualizarTarefasBean.carregarTarefas(2)}" style="display: none">
+            <h:commandButton id="btn_tarefas_curso" actionListener="#{visualizarTarefasBean.carregarTarefas(2, 'Em Curso')}" style="display: none">
                 <f:ajax render="form_tarefas"/>
             </h:commandButton>
-            <h:commandButton id="btn_tarefas_atrasada" actionListener="#{visualizarTarefasBean.carregarTarefas(4)}" style="display: none">
+            <h:commandButton id="btn_tarefas_atrasada" actionListener="#{visualizarTarefasBean.carregarTarefas(4, 'Atrasada')}" style="display: none">
                 <f:ajax render="form_tarefas"/>
             </h:commandButton>
-            <h:commandButton id="btn_tarefas_todas" actionListener="#{visualizarTarefasBean.carregarTarefas()}" style="display: none">
+            <h:commandButton id="btn_tarefas_todas" actionListener="#{visualizarTarefasBean.carregarTarefas('Todas')}" style="display: none">
                 <f:ajax render="form_tarefas"/>
             </h:commandButton>
             <h:commandButton id="btn_tarefas_delegadas" actionListener="#{visualizarTarefasBean.carregarTarefasDelegadas()}" style="display: none">
